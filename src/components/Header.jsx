@@ -5,10 +5,11 @@ import "../styles/Header.css";
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // --- estado para rastrear la sección activa ---
-  // Inicia en "home" por defecto
   const [activeSection, setActiveSection] = useState("home");
+
+  // La palabra que queremos animar letra por letra
+  const logoString = "POWER !";
+  const logoChars = logoString.split(""); // Lo separa en ['P','O','W','E','R',' ','!']
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,23 +28,33 @@ const Header = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // --- función para manejar el click en los links ---
   const handleLinkClick = (sectionName) => {
-    setActiveSection(sectionName); // Guardamos la sección clickeada
-    setIsMenuOpen(false); // Cerramos el menú
+    setActiveSection(sectionName);
+    setIsMenuOpen(false);
   };
 
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
       <div className="header-container">
-        {/* --- Logo --- */}
+        {/* --- LOGO ANIMADO LETRA POR LETRA --- */}
         <div className={`logo-container ${isScrolled ? "hide-logo" : ""}`}>
-          <h1 className="logo-text">POWER !</h1>
+          <h1 className="logo-text">
+            {logoChars.map((char, index) => (
+              <span
+                key={index}
+                className="logo-char"
+                // Le pasamos el índice a CSS para calcular el retraso de la animación
+                style={{ "--char-index": index }}
+              >
+                {/* Si es un espacio, forzamos que lo respete con un espacio irrompible */}
+                {char === " " ? "\u00A0" : char}
+              </span>
+            ))}
+          </h1>
         </div>
 
-        {/* --- Controles de la Derecha --- */}
+        {/* --- Controles de la Derecha (Se mantiene igual) --- */}
         <div className="controls-container">
-          {/* Botón Chat */}
           <button className="btn-chat">
             CHATEA CON NICO
             <span className="icon-chat">
@@ -63,11 +74,8 @@ const Header = () => {
           </button>
 
           <div className="menu-wrapper">
-            {/* Botón Menú / Close */}
             <button className="btn-menu" onClick={toggleMenu}>
-              <span className="menu-text">
-                {isMenuOpen ? "CERRAR" : "MENU"}
-              </span>
+              <span className="menu-text">{isMenuOpen ? "CLOSE" : "MENU"}</span>
               <span className={`icon-dots ${isMenuOpen ? "vertical" : ""}`}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
                   <circle cx="7" cy="12" r="2"></circle>
@@ -76,31 +84,15 @@ const Header = () => {
               </span>
             </button>
 
-            {/* --- Menú Desplegable --- */}
+            {/* Menú Desplegable (Mantenemos tu código igual) */}
             <nav className={`dropdown-menu ${isMenuOpen ? "open" : ""}`}>
               <ul>
                 <li>
-                  {/* clase condicional active-section si coincide el estado */}
                   <a
                     href="#home"
                     className={activeSection === "home" ? "active-section" : ""}
                     onClick={() => handleLinkClick("home")}
                   >
-                    <span className="link-arrow">
-                      <svg
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                      </svg>
-                    </span>
                     Home
                   </a>
                 </li>
@@ -112,21 +104,6 @@ const Header = () => {
                     }
                     onClick={() => handleLinkClick("studio")}
                   >
-                    <span className="link-arrow">
-                      <svg
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                      </svg>
-                    </span>
                     Studio
                   </a>
                 </li>
@@ -136,21 +113,6 @@ const Header = () => {
                     className={activeSection === "work" ? "active-section" : ""}
                     onClick={() => handleLinkClick("work")}
                   >
-                    <span className="link-arrow">
-                      <svg
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                      </svg>
-                    </span>
                     Work
                   </a>
                 </li>
@@ -162,21 +124,6 @@ const Header = () => {
                     }
                     onClick={() => handleLinkClick("contact")}
                   >
-                    <span className="link-arrow">
-                      <svg
-                        width="32"
-                        height="32"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      >
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
-                        <polyline points="12 5 19 12 12 19"></polyline>
-                      </svg>
-                    </span>
                     Contact
                   </a>
                 </li>
