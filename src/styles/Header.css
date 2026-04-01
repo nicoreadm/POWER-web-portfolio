@@ -28,28 +28,52 @@
 }
 
 /* =========================================
-   LOGO
+   LOGO Y ANIMACIÓN LETRA POR LETRA
    ========================================= */
+
+/* Le sacamos la animación al contenedor padre, ahora la hacen los hijos (las letras) */
 .logo-container {
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 1;
-  transform: translateY(0);
+  display: flex;
+  pointer-events: auto;
 }
 
+/* Evitamos clics si está oculto */
 .logo-container.hide-logo {
-  opacity: 0;
-  transform: translateY(-20px);
   pointer-events: none;
 }
-
 .logo-text {
-  font-size: 36px;
-  font-weight: 500;
-  letter-spacing: -1.5px;
+  font-size: 50px;
+  font-weight: 900;
+  letter-spacing: -2px;
   color: #111;
   margin: 0;
+  display: flex;
+  line-height: 0.8;
+  /* transform: translateY(-2px); */
+}
+/* Estilo base de CADA LETRA */
+.logo-char {
+  display: inline-block; /* Crucial para que el transform funcione en letras sueltas */
+  opacity: 1;
+  transform: translateY(0);
+
+  /* Animación suave para cuando VUELVEN a aparecer */
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Multiplicamos el índice por 0.03 segundos para hacer el efecto cascada */
+  transition-delay: calc(var(--char-index) * 0.03s);
+}
+
+/* ESTADO OCULTO DE CADA LETRA (Cuando scrolleás) */
+.logo-container.hide-logo .logo-char {
+  opacity: 0;
+  transform: translateY(-25px); /* Suben 25px hacia arriba */
+
+  /* Cuando se esconden, también mantienen el efecto en cascada, 
+     podés hacerlo un poco más rápido (0.02s) para que desaparezca ágil */
+  transition-delay: calc(var(--char-index) * 0.02s);
 }
 
 /* =========================================
