@@ -1,0 +1,256 @@
+/* =========================================
+   HEADER GENERAL Y SCROLL
+   ========================================= */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  padding: 24px 0;
+}
+
+.header.scrolled {
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 16px 0;
+}
+
+.header-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 40px;
+}
+
+/* =========================================
+   LOGO
+   ========================================= */
+.logo-container {
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.logo-container.hide-logo {
+  opacity: 0;
+  transform: translateY(-20px);
+  pointer-events: none;
+}
+
+.logo-text {
+  font-size: 36px;
+  font-weight: 500;
+  letter-spacing: -1.5px;
+  color: #111;
+  margin: 0;
+}
+
+/* =========================================
+   CONTROLES Y BOTONES
+   ========================================= */
+.controls-container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.btn-chat,
+.btn-menu {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 40px;
+  border: none;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  height: 48px;
+}
+
+.btn-chat {
+  background-color: #e2e4e9;
+  color: #111;
+  padding: 0 8px 0 24px;
+}
+
+.btn-chat:hover {
+  background-color: #d1d5db;
+  transform: scale(1.05);
+}
+
+.icon-chat {
+  background-color: white;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================
+   ANIMACIÓN DEL ICONO DE CHAT
+   ========================================= */
+.icon-chat svg {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-chat:hover .icon-chat svg {
+  transform: scale(1.15) rotate(-8deg);
+}
+
+.menu-wrapper {
+  position: relative;
+}
+
+.btn-menu {
+  background-color: #0f1115;
+  color: white;
+  padding: 0 8px 0 24px;
+  min-width: 110px;
+  justify-content: space-between;
+}
+
+.btn-menu:hover {
+  background-color: #1f222a;
+  transform: scale(1.05);
+}
+
+.menu-text {
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.icon-dots {
+  background-color: #232731;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.4s ease;
+}
+
+.icon-dots.vertical {
+  transform: rotate(90deg);
+}
+
+/* =========================================
+   MENÚ DESPLEGABLE (CONTENEDOR)
+   ========================================= */
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  background-color: #e2e4e9;
+  border-radius: 24px;
+  width: 320px;
+  padding: 32px 24px;
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-20px) scale(0.95);
+  transform-origin: top right;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu.open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+}
+
+.dropdown-menu ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Animación de entrada de los items */
+.dropdown-menu li {
+  opacity: 0;
+  transform: translateY(15px);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.dropdown-menu.open li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.dropdown-menu.open li:nth-child(1) {
+  transition-delay: 0.1s;
+}
+.dropdown-menu.open li:nth-child(2) {
+  transition-delay: 0.15s;
+}
+.dropdown-menu.open li:nth-child(3) {
+  transition-delay: 0.2s;
+}
+.dropdown-menu.open li:nth-child(4) {
+  transition-delay: 0.25s;
+}
+
+/* =========================================
+   LINKS Y EFECTO HOVER (HIGHLIGHT + FLECHA)
+   ========================================= */
+.dropdown-menu li a {
+  display: flex;
+  align-items: center;
+  color: #1a1c20;
+  text-decoration: none;
+  font-size: 42px;
+  font-weight: 700;
+  letter-spacing: -2px;
+  line-height: 1;
+  padding: 16px 24px;
+  border-radius: 16px;
+  transition: all 0.3s ease;
+}
+
+/* Contenedor de la flecha */
+.link-arrow {
+  display: inline-flex;
+  align-items: center;
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateX(-15px);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* EFECTO HOVER*/
+.dropdown-menu li a:hover {
+  background-color: #f3f5f8;
+  color: #0f1115;
+}
+
+.dropdown-menu li a:hover .link-arrow {
+  width: 44px; /* Abre espacio para la flecha */
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.dropdown-menu li a.active-section {
+  color: #a0a4ab;
+}
+
+.dropdown-menu li a.active-section:hover {
+  color: #0f1115;
+}
