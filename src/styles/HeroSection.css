@@ -1,0 +1,58 @@
+/* =========================================
+   1. LA PISTA DE SCROLL (El "freno" de la página)
+   ========================================= */
+.hero-track {
+  /* El alto determina CUÁNTO TIEMPO el usuario se queda atrapado acá.
+    300vh = 3 veces el alto de la pantalla. 
+    Si el texto pasa muy rápido, subilo a 400vh. Si pasa muy lento, bajalo a 200vh.
+  */
+  height: 500vh;
+  position: relative;
+  width: 100%;
+}
+
+/* =========================================
+   2. LA PANTALLA FIJA (Lo que el usuario ve)
+   ========================================= */
+.hero-sticky {
+  position: sticky;
+  top: 0; /* Se pega bien arriba del navegador */
+  height: 100vh; /* Ocupa exactamente la pantalla */
+  width: 100%;
+  background-color: #ffde00; /* Amarillo */
+  display: flex;
+  align-items: center;
+  overflow: hidden; /* Corta el texto que sobra */
+}
+
+/* =========================================
+   3. CONTENEDOR DEL TEXTO
+   ========================================= */
+.marquee-container {
+  display: flex;
+  white-space: nowrap;
+  /* Empezamos un poquito separados del borde izquierdo para que respire */
+  padding-left: 1vw;
+  will-change: transform; /* Optimiza el rendimiento de la animación */
+}
+
+/* =========================================
+   4. TIPOGRAFÍA
+   ========================================= */
+.massive-text {
+  font-size: 18vw; /* Letras GIGANTES */
+  font-weight: 900;
+  color: #0f1115;
+  text-transform: uppercase;
+  margin: 0;
+  padding-right: 3vw; /* Separación entre la primera frase y la segunda */
+  letter-spacing: -0.4vw;
+  line-height: 1;
+}
+
+/* Un estilo opcional para la segunda frase (texto hueco con borde) 
+   para que no sea solo un bloque negro interminable */
+.massive-text.outline {
+  color: transparent;
+  -webkit-text-stroke: 4px #0f1115; /* Borde negro de 4px */
+}
