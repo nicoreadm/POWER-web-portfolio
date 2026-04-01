@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 import "../styles/Header.css";
 
 const Header = () => {
@@ -7,16 +8,49 @@ const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
-  // La palabra que queremos animar letra por letra
-  const logoString = "POWER !";
-  const logoChars = logoString.split(""); // Lo separa en ['P','O','W','E','R',' ','!']
+  // --- NUEVOS ESTADOS PARA EL TEXTO DINÁMICO ---
+  const [headerText, setHeaderText] = useState("POWER !");
+  const [isLogoHidden, setIsLogoHidden] = useState(false);
+
+  // Generamos el array de letras basado en el estado actual
+  const logoChars = headerText.split("");
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
+      const scrollY = window.scrollY;
+
+      // Control del fondo del header (blur)
+      setIsScrolled(scrollY > 50);
+
+      // --- LÓGICA DE APARICIÓN Y CAMBIO DE TEXTO ---
+      const revealWrapper = document.querySelector(".reveal-wrapper");
+
+      if (revealWrapper) {
+        // Punto exacto donde la cortina amarilla revela la sección de clientes
+        const clientsTrigger =
+          revealWrapper.offsetTop +
+          revealWrapper.offsetHeight -
+          window.innerHeight / 1.5;
+
+        // Punto medio de la cortina amarilla (acá cambiamos el texto en silencio)
+        const textChangeTrigger =
+          revealWrapper.offsetTop + revealWrapper.offsetHeight / 2;
+
+        // 1. Mostrar u ocultar el logo
+        if (scrollY >= clientsTrigger) {
+          setIsLogoHidden(false); // Mostrar en Clientes
+        } else if (scrollY > 10) {
+          setIsLogoHidden(true); // Ocultar durante el scroll
+        } else {
+          setIsLogoHidden(false); // Mostrar en el Home (arriba de todo)
+        }
+
+        // 2. Cambiar el texto silenciosamente mientras está oculto
+        if (scrollY >= textChangeTrigger) {
+          setHeaderText("/ CLIENTES --");
+        } else {
+          setHeaderText("POWER !");
+        }
       }
     };
 
@@ -24,36 +58,54 @@ const Header = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+
+  const handleLinkClick = (e, sectionId) => {
+    e.preventDefault();
+    setActiveSection(sectionId);
+    setIsMenuOpen(false);
+
+    if (sectionId === "clientes") {
+      const heroWrapper = document.querySelector(".reveal-wrapper");
+      if (heroWrapper) {
+        const targetY = heroWrapper.offsetTop + heroWrapper.offsetHeight;
+        window.scrollTo({ top: targetY, behavior: "smooth" });
+      }
+    } else {
+      const element = document.getElementById(sectionId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }
   };
 
-  const handleLinkClick = (sectionName) => {
-    setActiveSection(sectionName);
-    setIsMenuOpen(false);
-  };
+  const navLinks = [
+    { name: "Home", id: "home" },
+    { name: "Work", id: "work" },
+    { name: "Clientes", id: "clientes" },
+    { name: "Contact", id: "contact" },
+  ];
 
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
       <div className="header-container">
-        {/* --- LOGO ANIMADO LETRA POR LETRA --- */}
-        <div className={`logo-container ${isScrolled ? "hide-logo" : ""}`}>
+        {/* --- LOGO ANIMADO DINÁMICO --- */}
+        {/* Usamos isLogoHidden en lugar de isScrolled para ocultarlo */}
+        <div className={`logo-container ${isLogoHidden ? "hide-logo" : ""}`}>
           <h1 className="logo-text">
             {logoChars.map((char, index) => (
               <span
                 key={index}
                 className="logo-char"
-                // Le pasamos el índice a CSS para calcular el retraso de la animación
                 style={{ "--char-index": index }}
               >
-                {/* Si es un espacio, forzamos que lo respete con un espacio irrompible */}
                 {char === " " ? "\u00A0" : char}
               </span>
             ))}
           </h1>
         </div>
 
-        {/* --- Controles de la Derecha (Se mantiene igual) --- */}
+        {/* --- Controles de la Derecha (Sin Cambios) --- */}
         <div className="controls-container">
           <button className="btn-chat">
             CHATEA CON NICO
@@ -84,49 +136,36 @@ const Header = () => {
               </span>
             </button>
 
-            {/* Menú Desplegable (Mantenemos tu código igual) */}
             <nav className={`dropdown-menu ${isMenuOpen ? "open" : ""}`}>
               <ul>
-                <li>
-                  <a
-                    href="#home"
-                    className={activeSection === "home" ? "active-section" : ""}
-                    onClick={() => handleLinkClick("home")}
-                  >
-                    Home
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#studio"
-                    className={
-                      activeSection === "studio" ? "active-section" : ""
-                    }
-                    onClick={() => handleLinkClick("studio")}
-                  >
-                    Studio
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#work"
-                    className={activeSection === "work" ? "active-section" : ""}
-                    onClick={() => handleLinkClick("work")}
-                  >
-                    Work
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#contact"
-                    className={
-                      activeSection === "contact" ? "active-section" : ""
-                    }
-                    onClick={() => handleLinkClick("contact")}
-                  >
-                    Contact
-                  </a>
-                </li>
+                {navLinks.map((link) => (
+                  <li key={link.id}>
+                    <Link
+                      href={`#${link.id}`}
+                      className={
+                        activeSection === link.id ? "active-section" : ""
+                      }
+                      onClick={(e) => handleLinkClick(e, link.id)}
+                    >
+                      <span className="link-arrow">
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 12h14"></path>
+                          <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                      </span>
+                      {link.name}
+                    </Link>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>

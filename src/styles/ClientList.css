@@ -36,8 +36,8 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  pointer-events: none; /* Crucial: permite que los clics pasen a través del encabezado y el contenido */
-  z-index: 5; /* Entre el contenido y el encabezado */
+  pointer-events: none;
+  z-index: 5;
   backdrop-filter: blur(10px); /* Aplica el desenfoque al contenido detrás */
 
   /* Máscara CSS inicial: un degradado radial transparente en el centro y negro en el exterior */
@@ -63,8 +63,8 @@
   justify-content: space-around;
   overflow: hidden;
   padding: 20px 0;
-  position: relative; /* Bloque de posicionamiento para las hileras */
-  z-index: 1; /* Detrás de la capa de máscara */
+  position: relative;
+  z-index: 1;
 }
 
 .marquesina-wrapper {
