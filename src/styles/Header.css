@@ -67,12 +67,14 @@
 }
 
 /* ESTADO OCULTO DE CADA LETRA (Cuando scrolleás) */
+/* ESTADO OCULTO DE CADA LETRA */
 .logo-container.hide-logo .logo-char {
   opacity: 0;
-  transform: translateY(-25px); /* Suben 25px hacia arriba */
+  /* CAMBIAR A VALOR POSITIVO (25px) */
+  /* Esto hace que las letras caigan hacia abajo para ocultarse, 
+     y al aparecer "suban" hacia su posición original (0) */
+  transform: translateY(25px);
 
-  /* Cuando se esconden, también mantienen el efecto en cascada, 
-     podés hacerlo un poco más rápido (0.02s) para que desaparezca ágil */
   transition-delay: calc(var(--char-index) * 0.02s);
 }
 
@@ -252,11 +254,19 @@
 .link-arrow {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   width: 0;
+  height: 32px;
   opacity: 0;
   overflow: hidden;
   transform: translateX(-15px);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-right: 8px;
+}
+
+.link-arrow svg {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-8px);
 }
 
 /* EFECTO HOVER*/
@@ -271,10 +281,33 @@
   transform: translateX(0);
 }
 
+.dropdown-menu li a:hover .link-arrow svg {
+  transform: translateX(0);
+  animation: arrowPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
 .dropdown-menu li a.active-section {
   color: #a0a4ab;
 }
 
 .dropdown-menu li a.active-section:hover {
   color: #0f1115;
+}
+
+/* =========================================
+   ANIMACIÓN DE LA FLECHA
+   ========================================= */
+@keyframes arrowPulse {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(6px);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
 }

@@ -87,7 +87,7 @@ const ClientList = () => {
   };
 
   return (
-    <div className="contenedor-principal">
+    <div id="clientes" className="contenedor-principal">
       {/* CAPA DE EFECTO DE MÁSCARA Y DESENFOQUE */}
       {/* Esta capa está por encima del contenido y su máscara se mueve con el cursor */}
       <div className="reveal-mask" ref={maskRef}></div>

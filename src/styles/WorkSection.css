@@ -1,0 +1,326 @@
+/* =========================================
+   1. CONTENEDOR PRINCIPAL
+   ========================================= */
+.work-section {
+  background-color: #0f1115; /* Fondo oscuro brutalista */
+  color: #f2f2f2;
+  width: 100%;
+  padding: 150px 5vw;
+  position: relative;
+  overflow: hidden; /* Corta el despliegue suave */
+  cursor: default;
+}
+
+.work-header {
+  margin-bottom: 80px;
+}
+
+.work-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #a0a4ab; /* Gris suave */
+}
+
+/* =========================================
+   2. LA LISTA Y LA FILA DESPLEGABLE (CORTINA)
+   ========================================= */
+.work-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.work-row {
+  display: flex;
+  flex-direction: column; /* Apila el header y los detalles verticalmente */
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+/* PARTE VISIBLE SIEMPRE */
+.row-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* DETALLES DESPLEGABLES (Ocultos por defecto con max-height: 0) */
+.row-details {
+  max-height: 0;
+  overflow: hidden; /* Corta el contenido cuando está colapsado */
+
+  /* Transición ultra suave de max-height para el efecto cortina */
+  transition:
+    max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+
+  opacity: 0;
+  transform: translateY(-20px) scaleY(0.95);
+  transform-origin: top;
+}
+
+/* ESTADO EXPANDIDO (Al hacer clic) */
+.work-row.expanded {
+  background-color: #1a1c20; /* Fondo más claro para resaltar la fila activa */
+  padding: 0 30px; /* Un poco de padding interno al expandirse */
+  border-bottom: 1px solid #ffde00; /* Borde amarillo Power abajo */
+}
+
+.work-row.expanded .row-details {
+  /* Al expandirse, le damos una altura máxima grande para que entre todo el contenido. 
+     El overflow:hidden corta el exceso. */
+  max-height: 1000px;
+  opacity: 1;
+  transform: translateY(0) scaleY(1);
+  padding-bottom: 80px; /* Respiro abajo */
+}
+
+/* =========================================
+   3. TIPOGRAFÍAS Y ANIMACIONES DEL HEADER
+   ========================================= */
+.work-info {
+  display: flex;
+  align-items: baseline;
+  gap: 30px;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.work-id {
+  font-size: 16px;
+  font-weight: 500;
+  color: #a0a4ab;
+}
+
+.work-name {
+  font-size: 6vw; /* Letras enormes */
+  font-weight: 900;
+  margin: 0;
+  letter-spacing: -2px;
+  text-transform: uppercase;
+  line-height: 1;
+  transition: color 0.4s ease;
+}
+
+.work-role {
+  font-size: 16px;
+  font-weight: 500;
+  color: #a0a4ab;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+/* Estilo fade para cuando se abre el acordeón */
+.work-role.is-faded {
+  opacity: 0.3;
+  transform: translateY(-10px);
+}
+
+/* HOVER NORMAL DE LAS FILAS */
+.work-row:hover .work-name {
+  color: #ffde00; /* Amarillo Power */
+}
+
+.work-row:hover .work-info {
+  transform: translateX(15px);
+}
+
+/* Opacamos las filas no seleccionadas */
+.work-list:hover .work-row:not(:hover):not(.expanded) {
+  opacity: 0.3;
+}
+
+/* =========================================
+   4. LAYOUT DE LOS DETALLES EXPANDIDOS
+   ========================================= */
+.detail-inner-content {
+  display: flex;
+  gap: 60px; /* Separación amplia entre foto y texto */
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+}
+
+/* Imagen Estática Grande */
+.detail-image-wrapper {
+  flex: 0 0 45%; /* La foto ocupa el 45% del ancho */
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.detail-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Información Detallada */
+.detail-info-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 50px; /* Separación amplia entre bloques de texto */
+  padding-top: 20px;
+}
+
+.detail-section-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffde00; /* Amarillo Power */
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detail-description {
+  font-size: 18px;
+  line-height: 1.6;
+  font-weight: 400;
+  color: #d1d5db;
+  margin: 0;
+}
+
+/* Grid de Tecnologías */
+.tech-tags-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.tech-tag {
+  background-color: #232731; /* Fondo gris oscuro sólido */
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* =========================================
+   5. EL BOTÓN BRUTALISTA DE IR AL SITIO (Nueva Lógica)
+   ========================================= */
+.detail-actions {
+  margin-top: 30px;
+  align-self: flex-start;
+}
+
+.btn-live-site {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background-color: transparent;
+  color: #ffde00; /* Amarillo Power por defecto */
+  padding: 0 12px 0 28px;
+  border-radius: 40px;
+  height: 52px;
+  font-weight: 700;
+  font-size: 13px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+
+  /* Borde Iridiscente/Vidrio Iridiscente (Sombra inspirada en la imagen_d5ff4e.jpg) */
+  box-shadow:
+    0 0 0 3px #ffde00,
+    /* Borde amarillo sólido exterior */ inset 0 0 10px rgba(0, 0, 0, 0.2),
+    /* Sombra interior */ 0 0 15px rgba(255, 222, 0, 0.3); /* Resplandor exterior iridiscente */
+
+  transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-live-site:hover {
+  background-color: #ffde00; /* Se invierte el color */
+  color: #0f1115; /* Texto negro brutalista */
+  transform: scale(1.03) rotate(-1deg);
+
+  /* Efecto de resplandor esmerilado más intenso al hover */
+  box-shadow:
+    0 0 0 3px #ffde00,
+    inset 0 0 15px rgba(255, 222, 0, 0.4),
+    0 0 25px rgba(255, 222, 0, 0.5);
+}
+
+.btn-arrow {
+  background-color: white; /* Círculo blanco para la flecha */
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.4s ease;
+}
+
+.btn-arrow svg {
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #0f1115; /* Flecha negra brutalista */
+}
+
+/* Animación de la flecha al hover */
+.btn-live-site:hover .btn-arrow svg {
+  transform: scale(1.1) rotate(-8deg);
+}
+
+/* =========================================
+   6. RESPONSIVE
+   ========================================= */
+@media (max-width: 1024px) {
+  .work-name {
+    font-size: 8vw;
+  }
+
+  .detail-inner-content {
+    gap: 40px;
+  }
+
+  .detail-image-wrapper {
+    flex: 0 0 50%;
+  }
+}
+
+/* En celulares el despliegue es en una sola columna */
+@media (max-width: 768px) {
+  .detail-inner-content {
+    flex-direction: column;
+    gap: 30px;
+  }
+
+  .detail-image-wrapper {
+    flex: 0 0 auto;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .detail-info-wrapper {
+    flex: 0 0 auto;
+    width: 100%;
+    gap: 30px;
+  }
+
+  .work-name {
+    font-size: 12vw;
+  }
+
+  .work-row.expanded {
+    padding: 0 15px;
+  }
+
+  .btn-live-site {
+    align-self: stretch; /* El botón ocupa todo el ancho */
+  }
+}

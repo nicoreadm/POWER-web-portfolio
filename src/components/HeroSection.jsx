@@ -93,7 +93,7 @@ const HeroSection = () => {
 
   return (
     <>
-      <section className="hero-track" ref={trackRef}>
+      <section id="home" className="hero-track" ref={trackRef}>
         <div className="hero-sticky cinema-layout">
           <div className="cinema-border top"></div>
           <div className="cinema-video-container">
