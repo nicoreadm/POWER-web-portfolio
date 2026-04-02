@@ -1,58 +1,246 @@
 /* =========================================
-   1. LA PISTA DE SCROLL (El "freno" de la página)
+   1. HERO TRACK & SCROLL
    ========================================= */
 .hero-track {
-  /* El alto determina CUÁNTO TIEMPO el usuario se queda atrapado acá.
-    300vh = 3 veces el alto de la pantalla. 
-    Si el texto pasa muy rápido, subilo a 400vh. Si pasa muy lento, bajalo a 200vh.
-  */
-  height: 500vh;
+  height: 600vh;
   position: relative;
   width: 100%;
 }
 
 /* =========================================
-   2. LA PANTALLA FIJA (Lo que el usuario ve)
+   2. HERO STICKY LAYOUT
    ========================================= */
 .hero-sticky {
   position: sticky;
-  top: 0; /* Se pega bien arriba del navegador */
-  height: 100vh; /* Ocupa exactamente la pantalla */
+  top: 0;
+  height: 100vh;
   width: 100%;
-  background-color: #ffde00; /* Amarillo */
+  overflow: hidden;
+  z-index: 1;
   display: flex;
-  align-items: center;
-  overflow: hidden; /* Corta el texto que sobra */
+  flex-direction: column;
+  background-color: #ffde00;
 }
 
 /* =========================================
-   3. CONTENEDOR DEL TEXTO
+   3. CINEMA BORDERS
+   ========================================= */
+.cinema-border {
+  height: 15vh;
+  width: 100%;
+  background-color: #ffde00;
+  z-index: 5;
+  position: relative;
+}
+
+/* =========================================
+   4. VIDEO CONTAINER & FILTER
+   ========================================= */
+.cinema-video-container {
+  flex: 1;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+
+.hero-background-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
+}
+
+.video-filter-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  mix-blend-mode: multiply;
+}
+
+/* =========================================
+   5. MARQUEE CONTAINER
    ========================================= */
 .marquee-container {
   display: flex;
   white-space: nowrap;
-  /* Empezamos un poquito separados del borde izquierdo para que respire */
-  padding-left: 1vw;
-  will-change: transform; /* Optimiza el rendimiento de la animación */
+  padding-left: 0.5vw;
+  will-change: transform;
+  z-index: 3;
 }
 
 /* =========================================
-   4. TIPOGRAFÍA
+   6. MASSIVE TYPOGRAPHY
    ========================================= */
 .massive-text {
-  font-size: 18vw; /* Letras GIGANTES */
+  font-size: 18.2vw;
   font-weight: 900;
   color: #0f1115;
   text-transform: uppercase;
   margin: 0;
-  padding-right: 3vw; /* Separación entre la primera frase y la segunda */
-  letter-spacing: -0.4vw;
+  padding-right: 4vw;
+  letter-spacing: -0.5vw;
+  line-height: 0.85;
+}
+
+.massive-text.outline {
+  color: transparent;
+  -webkit-text-stroke: 4px #0f1115;
+}
+
+/* =========================================
+   7. INFO SECTION (EDITORIAL GRID)
+   ========================================= */
+.info-section {
+  background-color: #ffde00;
+  width: 100%;
+  padding: 100px 5vw 150px 5vw;
+  color: #0f1115;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 60px;
+  margin-bottom: 120px;
+}
+
+.info-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-title {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #0f1115;
+}
+
+.info-text {
+  font-size: 16px;
+  line-height: 1.6;
+  font-weight: 400;
+  margin: 0;
+}
+
+.info-text strong {
+  font-weight: 700;
+}
+
+/* =========================================
+   8. TECH STACK & LOGOS
+   ========================================= */
+.stack-container {
+  width: 100%;
+}
+
+.stack-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px 60px;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 50px;
+}
+
+.tech-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.tech-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  color: #0f1115;
+  flex-shrink: 0;
+}
+
+.tech-icon svg {
+  display: block;
+  width: 1em;
+  height: 1em;
+}
+
+.tech-item {
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  color: #0f1115;
+  text-transform: uppercase;
   line-height: 1;
 }
 
-/* Un estilo opcional para la segunda frase (texto hueco con borde) 
-   para que no sea solo un bloque negro interminable */
-.massive-text.outline {
-  color: transparent;
-  -webkit-text-stroke: 4px #0f1115; /* Borde negro de 4px */
+.tech-wrapper:hover {
+  transform: translateY(-5px) scale(1.05);
+}
+
+.tech-wrapper:hover .tech-icon {
+  color: #000;
+}
+
+/* =========================================
+   9. SCROLL REVEAL ANIMATIONS
+   ========================================= */
+.reveal-on-scroll {
+  opacity: 0;
+  transform: translateY(50px);
+  transition:
+    opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* =========================================
+   10. RESPONSIVE DESIGN
+   ========================================= */
+@media (max-width: 1200px) {
+  .info-grid {
+    gap: 40px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .info-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .tech-icon {
+    font-size: 24px;
+  }
+
+  .tech-item {
+    font-size: 18px;
+  }
+
+  .stack-grid {
+    gap: 20px 30px;
+  }
 }

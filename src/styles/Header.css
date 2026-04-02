@@ -8,7 +8,11 @@
   width: 100%;
   z-index: 9999;
   background-color: transparent;
-  transition: all 0.3s ease;
+  /* Reducimos el tiempo de transición para que el cambio de posición sea instantáneo y no haya tirones */
+  transition:
+    background-color 0.3s ease,
+    padding 0.3s ease,
+    transform 0.2s ease;
   padding: 24px 0;
 }
 
@@ -26,32 +30,64 @@
   align-items: center;
   padding: 0 40px;
 }
-
 /* =========================================
-   LOGO
+   LOGO Y ANIMACIÓN LETRA POR LETRA
    ========================================= */
+
 .logo-container {
-  transition:
-    opacity 0.4s ease,
-    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  opacity: 1;
-  transform: translateY(0);
+  display: flex;
+  pointer-events: auto;
+  /* overflow: hidden; Opcional: Descomenta esto si quieres que las letras "nazcan" de la nada, 
+                       en lugar de verlas caer/subir desde más allá del contenedor */
 }
 
 .logo-container.hide-logo {
-  opacity: 0;
-  transform: translateY(-20px);
   pointer-events: none;
 }
 
 .logo-text {
-  font-size: 36px;
-  font-weight: 500;
-  letter-spacing: -1.5px;
+  font-size: 50px;
+  font-weight: 900;
+  letter-spacing: -2px;
   color: #111;
   margin: 0;
+  display: flex;
+  line-height: 0.8;
 }
 
+.logo-text.text-white {
+  color: #f2f2f2;
+  transition: color 0.3s ease;
+}
+
+/* --- ESTILO BASE DE CADA LETRA (VISIBLE) --- */
+.logo-char {
+  display: inline-block;
+  opacity: 1;
+  transform: translateY(0);
+
+  /* Animación para cuando APARECEN (suben) */
+  /* Usamos un delay basado en el índice para el efecto cascada */
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(var(--char-index) * 0.04s);
+}
+
+/* --- ESTADO OCULTO DE CADA LETRA --- */
+.logo-container.hide-logo .logo-char {
+  opacity: 0;
+  /* Al ocultarse, caen 30px hacia abajo */
+  transform: translateY(30px);
+
+  /* Animación para cuando DESAPARECEN (caen) */
+  /* Podemos hacer que caigan un poco más rápido (0.3s) y con un delay menor (0.02s) 
+     para que el ocultamiento sea más ágil que la aparición */
+  transition:
+    opacity 0.2s ease,
+    transform 0.3s cubic-bezier(0.5, 0, 0.2, 1);
+  transition-delay: calc(var(--char-index) * 0.02s);
+}
 /* =========================================
    CONTROLES Y BOTONES
    ========================================= */
@@ -228,11 +264,19 @@
 .link-arrow {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   width: 0;
+  height: 32px;
   opacity: 0;
   overflow: hidden;
   transform: translateX(-15px);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-right: 8px;
+}
+
+.link-arrow svg {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateX(-8px);
 }
 
 /* EFECTO HOVER*/
@@ -247,10 +291,87 @@
   transform: translateX(0);
 }
 
+.dropdown-menu li a:hover .link-arrow svg {
+  transform: translateX(0);
+  animation: arrowPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
+}
+
 .dropdown-menu li a.active-section {
   color: #a0a4ab;
 }
 
 .dropdown-menu li a.active-section:hover {
   color: #0f1115;
+}
+
+.logo-text.text-white {
+  color: #f2f2f2; /* Un blanco suave para no matar la vista */
+  transition: color 0.3s ease;
+}
+
+/* =========================================
+   ANIMACIÓN DE LA FLECHA
+   ========================================= */
+@keyframes arrowPulse {
+  0% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateX(6px);
+    opacity: 0.7;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.btn-chat-dynamic {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 40px;
+  border: none;
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+  height: 48px;
+  background-color: #e2e4e9;
+  color: #111;
+  padding: 0 8px 0 24px;
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 1. Definimos la ventanita por donde se ve el texto */
+.roll-visual-area {
+  height: 18px; /* Altura de una línea de texto */
+  overflow: hidden;
+  position: relative;
+}
+
+/* 2. El contenedor que tiene ambos textos uno arriba del otro */
+.roll-container {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* 3. Cada línea de texto mide lo mismo que la ventana */
+.roll-text {
+  height: 18px;
+  line-height: 18px;
+  display: block;
+  white-space: nowrap;
+  text-align: left;
+}
+
+/* 4. Cuando el modo es "work", subimos el contenedor 18px */
+.roll-container.work {
+  transform: translateY(-18px);
+}
+
+.btn-chat-dynamic:hover {
+  background-color: #d1d5db;
+  transform: scale(1.05);
 }
