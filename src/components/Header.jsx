@@ -4,60 +4,104 @@ import Link from "next/link";
 import "../styles/Header.css";
 
 const Header = () => {
+  // --- ESTADOS BÁSICOS ---
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
 
-  // --- NUEVOS ESTADOS PARA EL TEXTO DINÁMICO ---
+  // --- ESTADOS PARA TEXTO Y ANIMACIÓN ---
   const [headerText, setHeaderText] = useState("POWER !");
   const [isLogoHidden, setIsLogoHidden] = useState(false);
+  const [targetText, setTargetText] = useState("POWER !");
 
-  // Generamos el array de letras basado en el estado actual
   const logoChars = headerText.split("");
 
+  // --- LÓGICA DE SCROLL Y CÁLCULO DE ZONAS ---
   useEffect(() => {
+    let rafId;
+
     const handleScroll = () => {
-      const scrollY = window.scrollY;
+      rafId = requestAnimationFrame(() => {
+        const scrollY = window.scrollY;
+        setIsScrolled(scrollY > 50);
 
-      // Control del fondo del header (blur)
-      setIsScrolled(scrollY > 50);
+        const heroWrapper = document.querySelector(".reveal-wrapper");
+        const workSection = document.getElementById("work");
+        const contactSection = document.getElementById("contact");
 
-      // --- LÓGICA DE APARICIÓN Y CAMBIO DE TEXTO ---
-      const revealWrapper = document.querySelector(".reveal-wrapper");
+        if (heroWrapper && workSection) {
+          const heroBottom = heroWrapper.getBoundingClientRect().bottom;
+          const workTop = workSection.getBoundingClientRect().top;
+          const contactTop = contactSection
+            ? contactSection.getBoundingClientRect().top
+            : Infinity;
+          const vh = window.innerHeight;
 
-      if (revealWrapper) {
-        // Punto exacto donde la cortina amarilla revela la sección de clientes
-        const clientsTrigger =
-          revealWrapper.offsetTop +
-          revealWrapper.offsetHeight -
-          window.innerHeight / 1.5;
+          let currentTarget = "POWER !";
 
-        // Punto medio de la cortina amarilla (acá cambiamos el texto en silencio)
-        const textChangeTrigger =
-          revealWrapper.offsetTop + revealWrapper.offsetHeight / 2;
+          // 1. ZONA CONTACTO
+          // Se muestra cuando el footer asoma un 15% (0.85) y se oculta cuando llega a la mitad (0.55)
+          if (contactTop <= vh * 0.1) {
+            currentTarget = contactTop <= vh * -0.001 ? "" : "CONTACTO";
+          }
+          // 2. ZONA CLIENTES
+          else if (heroBottom <= vh / 2) {
+            currentTarget = "CLIENTES ";
+          }
+          // 3. ZONA WORK
+          else if (workTop <= 100) {
+            currentTarget = workTop <= -100 ? "" : "MI TRABAJO";
+          }
+          // 4. TRANSICIÓN HOME -> WORK
+          else if (scrollY > 50) {
+            currentTarget = "";
+          }
+          // 5. HOME
+          else {
+            currentTarget = "POWER !";
+          }
 
-        // 1. Mostrar u ocultar el logo
-        if (scrollY >= clientsTrigger) {
-          setIsLogoHidden(false); // Mostrar en Clientes
-        } else if (scrollY > 10) {
-          setIsLogoHidden(true); // Ocultar durante el scroll
-        } else {
-          setIsLogoHidden(false); // Mostrar en el Home (arriba de todo)
+          setTargetText(currentTarget);
         }
-
-        // 2. Cambiar el texto silenciosamente mientras está oculto
-        if (scrollY >= textChangeTrigger) {
-          setHeaderText("/ CLIENTES --");
-        } else {
-          setHeaderText("POWER !");
-        }
-      }
+      });
     };
 
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
+  // --- ORQUESTADOR DE ANIMACIÓN CSS ---
+  useEffect(() => {
+    if (targetText === "") {
+      setIsLogoHidden(true);
+      return;
+    }
+
+    if (targetText !== "" && targetText !== headerText) {
+      const hideTimeout = setTimeout(() => {
+        setIsLogoHidden(true);
+      }, 0);
+
+      const swapTimeout = setTimeout(() => {
+        setHeaderText(targetText);
+        setIsLogoHidden(false);
+      }, 400);
+
+      return () => {
+        clearTimeout(hideTimeout);
+        clearTimeout(swapTimeout);
+      };
+    }
+
+    if (targetText !== "" && targetText === headerText && isLogoHidden) {
+      setIsLogoHidden(false);
+    }
+  }, [targetText, headerText, isLogoHidden]);
+
+  // --- LÓGICA DE MENÚ Y NAVEGACIÓN ---
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleLinkClick = (e, sectionId) => {
@@ -86,13 +130,19 @@ const Header = () => {
     { name: "Contact", id: "contact" },
   ];
 
+  // --- RENDERIZADO DEL COMPONENTE ---
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
       <div className="header-container">
-        {/* --- LOGO ANIMADO DINÁMICO --- */}
-        {/* Usamos isLogoHidden en lugar de isScrolled para ocultarlo */}
+        {/* LOGO */}
         <div className={`logo-container ${isLogoHidden ? "hide-logo" : ""}`}>
-          <h1 className="logo-text">
+          <h1
+            className={`logo-text ${
+              headerText === "MI TRABAJO" || headerText === "CONTACTO"
+                ? "text-white"
+                : ""
+            }`}
+          >
             {logoChars.map((char, index) => (
               <span
                 key={index}
@@ -105,7 +155,7 @@ const Header = () => {
           </h1>
         </div>
 
-        {/* --- Controles de la Derecha (Sin Cambios) --- */}
+        {/* CONTROLES */}
         <div className="controls-container">
           <button className="btn-chat">
             CHATEA CON NICO

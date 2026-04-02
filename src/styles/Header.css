@@ -8,7 +8,11 @@
   width: 100%;
   z-index: 9999;
   background-color: transparent;
-  transition: all 0.3s ease;
+  /* Reducimos el tiempo de transición para que el cambio de posición sea instantáneo y no haya tirones */
+  transition:
+    background-color 0.3s ease,
+    padding 0.3s ease,
+    transform 0.2s ease;
   padding: 24px 0;
 }
 
@@ -26,21 +30,21 @@
   align-items: center;
   padding: 0 40px;
 }
-
 /* =========================================
    LOGO Y ANIMACIÓN LETRA POR LETRA
    ========================================= */
 
-/* Le sacamos la animación al contenedor padre, ahora la hacen los hijos (las letras) */
 .logo-container {
   display: flex;
   pointer-events: auto;
+  /* overflow: hidden; Opcional: Descomenta esto si quieres que las letras "nazcan" de la nada, 
+                       en lugar de verlas caer/subir desde más allá del contenedor */
 }
 
-/* Evitamos clics si está oculto */
 .logo-container.hide-logo {
   pointer-events: none;
 }
+
 .logo-text {
   font-size: 50px;
   font-weight: 900;
@@ -49,35 +53,41 @@
   margin: 0;
   display: flex;
   line-height: 0.8;
-  /* transform: translateY(-2px); */
 }
-/* Estilo base de CADA LETRA */
+
+.logo-text.text-white {
+  color: #f2f2f2;
+  transition: color 0.3s ease;
+}
+
+/* --- ESTILO BASE DE CADA LETRA (VISIBLE) --- */
 .logo-char {
-  display: inline-block; /* Crucial para que el transform funcione en letras sueltas */
+  display: inline-block;
   opacity: 1;
   transform: translateY(0);
 
-  /* Animación suave para cuando VUELVEN a aparecer */
+  /* Animación para cuando APARECEN (suben) */
+  /* Usamos un delay basado en el índice para el efecto cascada */
   transition:
     opacity 0.3s ease,
     transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-
-  /* Multiplicamos el índice por 0.03 segundos para hacer el efecto cascada */
-  transition-delay: calc(var(--char-index) * 0.03s);
+  transition-delay: calc(var(--char-index) * 0.04s);
 }
 
-/* ESTADO OCULTO DE CADA LETRA (Cuando scrolleás) */
-/* ESTADO OCULTO DE CADA LETRA */
+/* --- ESTADO OCULTO DE CADA LETRA --- */
 .logo-container.hide-logo .logo-char {
   opacity: 0;
-  /* CAMBIAR A VALOR POSITIVO (25px) */
-  /* Esto hace que las letras caigan hacia abajo para ocultarse, 
-     y al aparecer "suban" hacia su posición original (0) */
-  transform: translateY(25px);
+  /* Al ocultarse, caen 30px hacia abajo */
+  transform: translateY(30px);
 
+  /* Animación para cuando DESAPARECEN (caen) */
+  /* Podemos hacer que caigan un poco más rápido (0.3s) y con un delay menor (0.02s) 
+     para que el ocultamiento sea más ágil que la aparición */
+  transition:
+    opacity 0.2s ease,
+    transform 0.3s cubic-bezier(0.5, 0, 0.2, 1);
   transition-delay: calc(var(--char-index) * 0.02s);
 }
-
 /* =========================================
    CONTROLES Y BOTONES
    ========================================= */
@@ -292,6 +302,11 @@
 
 .dropdown-menu li a.active-section:hover {
   color: #0f1115;
+}
+
+.logo-text.text-white {
+  color: #f2f2f2; /* Un blanco suave para no matar la vista */
+  transition: color 0.3s ease;
 }
 
 /* =========================================

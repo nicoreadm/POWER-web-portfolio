@@ -25,26 +25,30 @@ const WorkSection = () => {
       details:
         "Diseño y desarrollo de una plataforma completa para el sector inmobiliario de lujo. Incluye panel de control para agentes, rastreo de propiedades en tiempo real y sistema de autenticación avanzada.",
       liveUrl: "https://morizzio.vercel.app",
+      typeUrl: "IR AL SITIO REAL",
     },
+
     {
       id: "02",
+      name: "POWER! PORTFOLIO",
+      role: "Personal Portfolio",
+      image: "/portfolio-preview.jpg",
+      technologies: ["Next.js", "JavaScript", "CSS", "React"],
+      details:
+        "Sistema de autenticación robusto y escalable. Incluye Middlewares de seguridad, manejo de Refresh Tokens y persistencia de sesión con MySQL.",
+      liveUrl: "https://github.com/nicoreadm/POWER-web-portfolio",
+      typeUrl: "IR A GITHUB",
+    },
+    {
+      id: "03",
       name: "EMPRETIENDA DARK",
       role: "Open Source CSS Theme",
       image: "/empretienda-preview.jpg",
       technologies: ["JavaScript", "CSS3 (SCSS)", "Themes", "UX/UI"],
       details:
         "Primer y único tema oscuro para Empretienda. Desarrollado con enfoque en el usuario y la legibilidad en pantallas AMOLED. Código libre para la comunidad.",
-      liveUrl: "https://github.com/nicolashofid/empretienda-dark",
-    },
-    {
-      id: "03",
-      name: "AUTH SYSTEM",
-      role: "Authentication System",
-      image: "/auth-preview.jpg",
-      technologies: ["Next.js", "MySQL", "JWT", "Security", "Middleware"],
-      details:
-        "Sistema de autenticación robusto y escalable. Incluye Middlewares de seguridad, manejo de Refresh Tokens y persistencia de sesión con MySQL.",
-      liveUrl: "https://auth-system-project.com",
+      liveUrl: "https://github.com/nicoreadm/Empretienda-Dark-Mode-CSS",
+      typeUrl: "IR A GITHUB",
     },
   ];
 
@@ -126,7 +130,7 @@ const WorkSection = () => {
                         target="_blank"
                         className="btn-live-site"
                       >
-                        <span>IR AL SITIO REAL</span>
+                        <span>{project.typeUrl}</span>
                         {/* Esta es la flecha animada que ya tenías en el header, pero más gruesa */}
                         <span className="btn-arrow">
                           <svg
