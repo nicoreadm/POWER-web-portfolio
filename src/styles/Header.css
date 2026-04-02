@@ -375,3 +375,32 @@
   background-color: #d1d5db;
   transform: scale(1.05);
 }
+
+/* =========================================
+   LOGO Y ANIMACIÓN LETRA POR LETRA
+   ========================================= */
+
+/* ... (Tus estilos existentes para .logo-container, .logo-text, .logo-char, etc.) ... */
+
+/* --- NUEVO: ESTILOS PARA EL GIF DE POWER --- */
+
+/* Contenedor del GIF (span .logo-char) */
+.power-gif-container {
+  display: inline-flex; /* Para alinear verticalmente */
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px; /* Espacio entre el GIF y la 'P' */
+  vertical-align: middle; /* Alineación mágica con el texto */
+  transform: translateY(-4px); /* Ajuste fino si queda muy arriba/abajo */
+}
+
+/* El GIF circular en sí */
+.power-gif-circle {
+  width: 50px; /* Tamaño del círculo (ajusta según tu fuente) */
+  height: 50px; /* Debe ser igual al width */
+  aspect-ratio: 1 / 1; /* Garantiza proporciones cuadradas */
+  border-radius: 50%; /* Lo hace redondo */
+  object-fit: cover; /* Centra y recorta el GIF dentro del círculo */
+  border: 2px solid #111; /* Un borde negro fino para que destaque sobre el amarillo */
+  display: block;
+}
