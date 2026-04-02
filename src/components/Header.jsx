@@ -116,20 +116,35 @@ const Header = () => {
     { name: "Clientes", id: "clientes" },
     { name: "Contact", id: "contact" },
   ];
-
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
       <div className="header-container">
-        {/* LOGO */}
+        {/* LOGO CONTAINER CON EL GIF INTEGRADO */}
         <div className={`logo-container ${isLogoHidden ? "hide-logo" : ""}`}>
-          <h1
-            className={`logo-text ${headerText === "MI TRABAJO" || headerText === "CONTACTO" ? "text-white" : ""}`}
-          >
+          <h1 className="logo-text">
+            {/* 1. EL GIF DE POWER (Tratado como una letra más para la animación) */}
+            {headerText === "POWER !" && (
+              <span
+                className="logo-char power-gif-container"
+                style={{ "--char-index": 0 }} // Es la primera 'letra'
+              >
+                <img
+                  src="/power-head.gif"
+                  alt="Power"
+                  className="power-gif-circle"
+                />
+              </span>
+            )}
+
+            {/* 2. LAS LETRAS (Ajustamos el index si está el GIF) */}
             {logoChars.map((char, index) => (
               <span
                 key={index}
                 className="logo-char"
-                style={{ "--char-index": index }}
+                // Si el GIF está presente, las letras empiezan en el índice 1
+                style={{
+                  "--char-index": headerText === "POWER !" ? index + 1 : index,
+                }}
               >
                 {char === " " ? "\u00A0" : char}
               </span>
