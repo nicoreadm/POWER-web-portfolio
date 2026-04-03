@@ -8,7 +8,7 @@ const Footer = () => {
         {/* --- SECCIÓN SUPERIOR: TÍTULO GIGANTE --- */}
         <div className="footer-top">
           <h2 className="footer-title">
-            HABLEMOS<span>.</span>
+            HABLEMOS<span className="theme-dot">.</span>
           </h2>
           <p className="footer-subtitle">
             ¿Tienes un proyecto en mente? Hagámoslo realidad.
@@ -35,10 +35,9 @@ const Footer = () => {
             </a>
 
             {/* --- NUEVO: BOTÓN DE DESCARGA DE CV --- */}
-            {/* Asegúrate de que la ruta al href sea la correcta hacia tu archivo PDF en public/ */}
             <a
-              href="/nicolas-read-cv.pdf" // Reemplaza con el nombre de tu PDF
-              download="Nicolas_Amaro_Muñoz_Read_CV.pdf" // Nombre con el que se descargará el archivo
+              href="/nicolas-read-cv.pdf"
+              download="Nicolas_Amaro_Muñoz_Read_CV.pdf"
               className="roll-link cv-link"
               data-text="DESCARGAR PDF"
             >
@@ -96,7 +95,9 @@ const Footer = () => {
           <p>
             DESIGNED BY:{" "}
             <strong>
-              <a href="https://github.com/nicoreadm">NICOLAS READ</a>
+              <a href="https://github.com/nicoreadm" className="designer-link">
+                NICOLAS READ
+              </a>
             </strong>
           </p>
         </div>

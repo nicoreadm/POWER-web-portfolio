@@ -244,9 +244,11 @@
 }
 
 /* =========================================
-   LINKS Y EFECTO HOVER (HIGHLIGHT + FLECHA)
+   LINKS Y BOTONES DEL MENÚ (HIGHLIGHT + FLECHA)
    ========================================= */
-.dropdown-menu li a {
+/* Agrupamos los <a> y los <button> para que se vean idénticos (letras gigantes) */
+.dropdown-menu li a,
+.dropdown-menu li .theme-select-btn {
   display: flex;
   align-items: center;
   color: #1a1c20;
@@ -258,6 +260,12 @@
   padding: 16px 24px;
   border-radius: 16px;
   transition: all 0.3s ease;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  font-family: inherit;
 }
 
 /* Contenedor de la flecha */
@@ -279,38 +287,43 @@
   transform: translateX(-8px);
 }
 
-/* EFECTO HOVER*/
-.dropdown-menu li a:hover {
+/* EFECTO HOVER (Fondo gris clarito) */
+.dropdown-menu li a:hover,
+.dropdown-menu li .theme-select-btn:hover {
   background-color: #f3f5f8;
   color: #0f1115;
 }
 
-.dropdown-menu li a:hover .link-arrow {
+/* Expansión de la flecha al hacer hover O cuando el tema está activo */
+.dropdown-menu li a:hover .link-arrow,
+.dropdown-menu li .theme-select-btn:hover .link-arrow,
+.dropdown-menu li .theme-select-btn.active-section .link-arrow {
   width: 44px; /* Abre espacio para la flecha */
   opacity: 1;
   transform: translateX(0);
 }
 
-.dropdown-menu li a:hover .link-arrow svg {
+/* Animación de la flecha rebotando */
+.dropdown-menu li a:hover .link-arrow svg,
+.dropdown-menu li .theme-select-btn:hover .link-arrow svg,
+.dropdown-menu li .theme-select-btn.active-section .link-arrow svg {
   transform: translateX(0);
   animation: arrowPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
-.dropdown-menu li a.active-section {
+/* Color gris cuando la sección/tema está activo */
+.dropdown-menu li a.active-section,
+.dropdown-menu li .theme-select-btn.active-section {
   color: #a0a4ab;
 }
 
-.dropdown-menu li a.active-section:hover {
+.dropdown-menu li a.active-section:hover,
+.dropdown-menu li .theme-select-btn.active-section:hover {
   color: #0f1115;
 }
 
-.logo-text.text-white {
-  color: #f2f2f2; /* Un blanco suave para no matar la vista */
-  transition: color 0.3s ease;
-}
-
 /* =========================================
-   ANIMACIÓN DE LA FLECHA
+   ANIMACIÓN DE LA FLECHA (Keyframes)
    ========================================= */
 @keyframes arrowPulse {
   0% {
@@ -327,6 +340,9 @@
   }
 }
 
+/* =========================================
+   BOTÓN DINÁMICO CHAT / TRABAJO
+   ========================================= */
 .btn-chat-dynamic {
   display: flex;
   align-items: center;
@@ -343,21 +359,18 @@
   transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* 1. Definimos la ventanita por donde se ve el texto */
 .roll-visual-area {
-  height: 18px; /* Altura de una línea de texto */
+  height: 18px;
   overflow: hidden;
   position: relative;
 }
 
-/* 2. El contenedor que tiene ambos textos uno arriba del otro */
 .roll-container {
   display: flex;
   flex-direction: column;
   transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-/* 3. Cada línea de texto mide lo mismo que la ventana */
 .roll-text {
   height: 18px;
   line-height: 18px;
@@ -366,7 +379,6 @@
   text-align: left;
 }
 
-/* 4. Cuando el modo es "work", subimos el contenedor 18px */
 .roll-container.work {
   transform: translateY(-18px);
 }
@@ -376,6 +388,27 @@
   transform: scale(1.05);
 }
 
+/* =========================================
+   GIF DINÁMICO DE TEMAS
+   ========================================= */
+.power-gif-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+  vertical-align: middle;
+  transform: translateY(-4px);
+}
+
+.power-gif-circle {
+  width: 50px;
+  height: 50px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #111;
+  display: block;
+}
 /* =========================================
    LOGO Y ANIMACIÓN LETRA POR LETRA
    ========================================= */
@@ -403,4 +436,77 @@
   object-fit: cover; /* Centra y recorta el GIF dentro del círculo */
   border: 2px solid #111; /* Un borde negro fino para que destaque sobre el amarillo */
   display: block;
+}
+
+/* Limpia los estilos por defecto del botón para que parezca un Link del menú */
+.theme-select-btn {
+  background: transparent;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* Aprovechamos el hover que ya tenías para los enlaces a (Link) */
+.theme-select-btn:hover {
+  opacity: 0.7;
+}
+
+/* Activa la flecha cuando el tema está seleccionado (mismo comportamiento que tu active-section) */
+.theme-select-btn.active-section .link-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* =========================================
+   ESTILOS PARA EL MENÚ DE TEMAS
+   ========================================= */
+
+/* Reseteamos el botón para que parezca texto normal del menú */
+.dropdown-menu ul li .theme-select-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  background: transparent;
+  border: none;
+  color: inherit;
+  font-family: inherit;
+  font-size: inherit; /* Hereda el tamaño gigante/estilo de tus links */
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  transition: opacity 0.3s ease;
+}
+
+/* Estado inicial de la flecha: oculta y desplazada a la izquierda */
+.dropdown-menu ul li .theme-select-btn .link-arrow {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 15px; /* Espacio entre la flecha y el nombre del tema */
+  opacity: 0;
+  transform: translateX(-15px);
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ANIMACIÓN DE LA FLECHA: 
+  Aparece y se desliza a su lugar original cuando pasas el mouse (hover) 
+  o cuando ese tema está seleccionado (.active-section) 
+*/
+.dropdown-menu ul li .theme-select-btn:hover .link-arrow,
+.dropdown-menu ul li .theme-select-btn.active-section .link-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Efecto hover general opcional (si tus links se aclaran al pasar el mouse) */
+.dropdown-menu ul li .theme-select-btn:hover {
+  opacity: 0.7;
 }

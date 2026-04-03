@@ -1,6 +1,8 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-// Acordate de importar tus iconos
+// Importa el contexto
+import { useTheme } from "./ThemeContext";
+
 import {
   SiReact,
   SiNextdotjs,
@@ -16,14 +18,23 @@ import {
 import { TbApi } from "react-icons/tb";
 import "../styles/HeroSection.css";
 
+// --- DICCIONARIO DE VIDEOS POR TEMA ---
+const HERO_VIDEOS = {
+  heart: "/heart-video.mp4", // Asegúrate de tener estos videos optimizados
+  power: "/power-video.mp4", // Tu video original optimizado
+  gyro: "/gyro-video.mp4",
+  teto: "/teto-video.mp4",
+};
+
 const HeroSection = () => {
+  // 1. Consumimos el tema actual
+  const { theme } = useTheme();
+  const currentVideo = HERO_VIDEOS[theme] || HERO_VIDEOS.heart;
+
   const [transformX, setTransformX] = useState(0);
-
-  // Referencias seguras para React
   const trackRef = useRef(null);
-  const infoSectionRef = useRef(null); // <-- NUEVA REFERENCIA
+  const infoSectionRef = useRef(null);
 
-  // --- 1. Lógica de Sticky Scroll ---
   useEffect(() => {
     const handleScroll = () => {
       if (!trackRef.current) return;
@@ -48,25 +59,22 @@ const HeroSection = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // --- 2. Lógica de Scroll Reveal CORREGIDA ---
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add("visible");
-            // Hacemos que la animación se dispare solo una vez
             observer.unobserve(entry.target);
           }
         });
       },
       {
-        threshold: 0.1, // Se activa cuando asoma un 10% del elemento
-        rootMargin: "0px 0px -50px 0px", // Margen de seguridad para que la animación empiece un poquito antes
+        threshold: 0.1,
+        rootMargin: "0px 0px -50px 0px",
       },
     );
 
-    // Ahora buscamos los elementos DENTRO de la referencia, asegurando que existen
     if (infoSectionRef.current) {
       const hiddenElements =
         infoSectionRef.current.querySelectorAll(".reveal-on-scroll");
@@ -74,9 +82,8 @@ const HeroSection = () => {
     }
 
     return () => observer.disconnect();
-  }, []); // Array vacío para que corra solo al montar el componente
+  }, []);
 
-  // --- 3. Datos del Stack ---
   const techStack = [
     { name: "React", icon: <SiReact /> },
     { name: "Next.js", icon: <SiNextdotjs /> },
@@ -97,13 +104,15 @@ const HeroSection = () => {
         <div className="hero-sticky cinema-layout">
           <div className="cinema-border top"></div>
           <div className="cinema-video-container">
+            {/* 2. AGREGAMOS EL KEY: Es crucial para que React recargue el video al cambiar el src */}
             <video
+              key={theme}
               className="hero-background-video"
               autoPlay
               loop
               muted
               playsInline
-              src="/background-video.mp4"
+              src={currentVideo}
             />
             <div className="video-filter-overlay"></div>
             <div
@@ -118,7 +127,6 @@ const HeroSection = () => {
         </div>
       </section>
 
-      {/* --- LE AGREGAMOS EL REF A LA SECCIÓN --- */}
       <section className="info-section" ref={infoSectionRef}>
         <div className="info-grid">
           <div

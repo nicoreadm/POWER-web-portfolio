@@ -1,13 +1,43 @@
 /* =========================================
+   0. VARIABLES DE TEMA (ACENTOS)
+   ========================================= */
+/* Heart: Blanco crema */
+:root[data-theme="heart"] {
+  --theme-accent: #f5f4ef;
+  --theme-accent-rgb: 245, 244, 239;
+  --theme-text-hover: #111111; /* Texto oscuro al hacer hover sobre el fondo crema */
+}
+
+/* Power: Amarillo vibrante original */
+:root[data-theme="power"] {
+  --theme-accent: #ffde00;
+  --theme-accent-rgb: 255, 222, 0;
+  --theme-text-hover: #0f1115; /* Texto oscuro al hacer hover */
+}
+
+/* Gyro: Verde acero/menta vibrante */
+:root[data-theme="gyro"] {
+  --theme-accent: #00e676;
+  --theme-accent-rgb: 0, 230, 118;
+  --theme-text-hover: #0f1115;
+}
+
+:root[data-theme="teto"] {
+  --theme-accent: #a82a2a;
+  --theme-accent-rgb: 168, 42, 42;
+  --theme-text-hover: #0f1115;
+}
+
+/* =========================================
    1. CONTENEDOR PRINCIPAL
    ========================================= */
 .work-section {
-  background-color: #0f1115; /* Fondo oscuro brutalista */
+  background-color: #0f1115;
   color: #f2f2f2;
   width: 100%;
   padding: 150px 5vw;
   position: relative;
-  overflow: hidden; /* Corta el despliegue suave */
+  overflow: hidden;
   cursor: default;
 }
 
@@ -20,7 +50,7 @@
   font-weight: 700;
   letter-spacing: 1px;
   text-transform: uppercase;
-  color: #a0a4ab; /* Gris suave */
+  color: #a0a4ab;
 }
 
 /* =========================================
@@ -35,13 +65,12 @@
 
 .work-row {
   display: flex;
-  flex-direction: column; /* Apila el header y los detalles verticalmente */
+  flex-direction: column;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
 }
 
-/* PARTE VISIBLE SIEMPRE */
 .row-header {
   display: flex;
   justify-content: space-between;
@@ -50,36 +79,30 @@
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* DETALLES DESPLEGABLES (Ocultos por defecto con max-height: 0) */
 .row-details {
   max-height: 0;
-  overflow: hidden; /* Corta el contenido cuando está colapsado */
-
-  /* Transición ultra suave de max-height para el efecto cortina */
+  overflow: hidden;
   transition:
     max-height 0.8s cubic-bezier(0.16, 1, 0.3, 1),
     opacity 0.6s ease,
     transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-
   opacity: 0;
   transform: translateY(-20px) scaleY(0.95);
   transform-origin: top;
 }
 
-/* ESTADO EXPANDIDO (Al hacer clic) */
 .work-row.expanded {
-  background-color: #1a1c20; /* Fondo más claro para resaltar la fila activa */
-  padding: 0 30px; /* Un poco de padding interno al expandirse */
-  border-bottom: 1px solid #ffde00; /* Borde amarillo Power abajo */
+  background-color: #1a1c20;
+  padding: 0 30px;
+  /* CAMBIO: Usamos la variable de acento en lugar del amarillo fijo */
+  border-bottom: 1px solid var(--theme-accent);
 }
 
 .work-row.expanded .row-details {
-  /* Al expandirse, le damos una altura máxima grande para que entre todo el contenido. 
-     El overflow:hidden corta el exceso. */
   max-height: 1000px;
   opacity: 1;
   transform: translateY(0) scaleY(1);
-  padding-bottom: 80px; /* Respiro abajo */
+  padding-bottom: 80px;
 }
 
 /* =========================================
@@ -99,7 +122,7 @@
 }
 
 .work-name {
-  font-size: 6vw; /* Letras enormes */
+  font-size: 6vw;
   font-weight: 900;
   margin: 0;
   letter-spacing: -2px;
@@ -119,22 +142,20 @@
     transform 0.4s ease;
 }
 
-/* Estilo fade para cuando se abre el acordeón */
 .work-role.is-faded {
   opacity: 0.3;
   transform: translateY(-10px);
 }
 
-/* HOVER NORMAL DE LAS FILAS */
+/* CAMBIO: Al hacer hover, el título toma el color del tema actual */
 .work-row:hover .work-name {
-  color: #ffde00; /* Amarillo Power */
+  color: var(--theme-accent);
 }
 
 .work-row:hover .work-info {
   transform: translateX(15px);
 }
 
-/* Opacamos las filas no seleccionadas */
 .work-list:hover .work-row:not(:hover):not(.expanded) {
   opacity: 0.3;
 }
@@ -144,15 +165,14 @@
    ========================================= */
 .detail-inner-content {
   display: flex;
-  gap: 60px; /* Separación amplia entre foto y texto */
+  gap: 60px;
   align-items: flex-start;
   width: 100%;
   margin-top: 20px;
 }
 
-/* Imagen Estática Grande */
 .detail-image-wrapper {
-  flex: 0 0 45%; /* La foto ocupa el 45% del ancho */
+  flex: 0 0 45%;
   width: 100%;
   border-radius: 8px;
   overflow: hidden;
@@ -165,19 +185,19 @@
   object-fit: cover;
 }
 
-/* Información Detallada */
 .detail-info-wrapper {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 50px; /* Separación amplia entre bloques de texto */
+  gap: 50px;
   padding-top: 20px;
 }
 
+/* CAMBIO: Los mini-títulos toman el color del tema actual */
 .detail-section-title {
   font-size: 14px;
   font-weight: 700;
-  color: #ffde00; /* Amarillo Power */
+  color: var(--theme-accent);
   margin-bottom: 20px;
   text-transform: uppercase;
   letter-spacing: 1px;
@@ -191,7 +211,6 @@
   margin: 0;
 }
 
-/* Grid de Tecnologías */
 .tech-tags-grid {
   display: flex;
   flex-wrap: wrap;
@@ -200,7 +219,7 @@
 }
 
 .tech-tag {
-  background-color: #232731; /* Fondo gris oscuro sólido */
+  background-color: #232731;
   color: #fff;
   padding: 8px 16px;
   border-radius: 4px;
@@ -211,7 +230,7 @@
 }
 
 /* =========================================
-   5. EL BOTÓN BRUTALISTA DE IR AL SITIO (Nueva Lógica)
+   5. EL BOTÓN BRUTALISTA DE IR AL SITIO
    ========================================= */
 .detail-actions {
   margin-top: 30px;
@@ -223,7 +242,8 @@
   align-items: center;
   gap: 15px;
   background-color: transparent;
-  color: #ffde00; /* Amarillo Power por defecto */
+  /* CAMBIO: Color de texto del botón = color del tema */
+  color: var(--theme-accent);
   padding: 0 12px 0 28px;
   border-radius: 40px;
   height: 52px;
@@ -233,29 +253,30 @@
   text-decoration: none;
   cursor: pointer;
 
-  /* Borde Iridiscente/Vidrio Iridiscente (Sombra inspirada en la imagen_d5ff4e.jpg) */
+  /* CAMBIO: Inyectamos el color sólido y el RGB para el resplandor */
   box-shadow:
-    0 0 0 3px #ffde00,
-    /* Borde amarillo sólido exterior */ inset 0 0 10px rgba(0, 0, 0, 0.2),
-    /* Sombra interior */ 0 0 15px rgba(255, 222, 0, 0.3); /* Resplandor exterior iridiscente */
+    0 0 0 3px var(--theme-accent),
+    inset 0 0 10px rgba(0, 0, 0, 0.2),
+    0 0 15px rgba(var(--theme-accent-rgb), 0.3);
 
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-live-site:hover {
-  background-color: #ffde00; /* Se invierte el color */
-  color: #0f1115; /* Texto negro brutalista */
+  /* CAMBIO: Fondo del botón y texto al hacer hover se adaptan al tema */
+  background-color: var(--theme-accent);
+  color: var(--theme-text-hover);
   transform: scale(1.03) rotate(-1deg);
 
-  /* Efecto de resplandor esmerilado más intenso al hover */
+  /* Intensificamos el resplandor usando nuestra variable RGB */
   box-shadow:
-    0 0 0 3px #ffde00,
-    inset 0 0 15px rgba(255, 222, 0, 0.4),
-    0 0 25px rgba(255, 222, 0, 0.5);
+    0 0 0 3px var(--theme-accent),
+    inset 0 0 15px rgba(var(--theme-accent-rgb), 0.4),
+    0 0 25px rgba(var(--theme-accent-rgb), 0.5);
 }
 
 .btn-arrow {
-  background-color: white; /* Círculo blanco para la flecha */
+  background-color: white;
   border-radius: 50%;
   width: 38px;
   height: 38px;
@@ -268,10 +289,9 @@
 
 .btn-arrow svg {
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  color: #0f1115; /* Flecha negra brutalista */
+  color: #0f1115;
 }
 
-/* Animación de la flecha al hover */
 .btn-live-site:hover .btn-arrow svg {
   transform: scale(1.1) rotate(-8deg);
 }
@@ -283,44 +303,36 @@
   .work-name {
     font-size: 8vw;
   }
-
   .detail-inner-content {
     gap: 40px;
   }
-
   .detail-image-wrapper {
     flex: 0 0 50%;
   }
 }
 
-/* En celulares el despliegue es en una sola columna */
 @media (max-width: 768px) {
   .detail-inner-content {
     flex-direction: column;
     gap: 30px;
   }
-
   .detail-image-wrapper {
     flex: 0 0 auto;
     width: 100%;
     margin-bottom: 10px;
   }
-
   .detail-info-wrapper {
     flex: 0 0 auto;
     width: 100%;
     gap: 30px;
   }
-
   .work-name {
     font-size: 12vw;
   }
-
   .work-row.expanded {
     padding: 0 15px;
   }
-
   .btn-live-site {
-    align-self: stretch; /* El botón ocupa todo el ancho */
+    align-self: stretch;
   }
 }
