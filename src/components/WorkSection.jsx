@@ -1,20 +1,17 @@
 "use client";
 import React, { useState } from "react";
-import Link from "next/link"; // Usamos Link de Next.js
-import "../styles/WorkSection.css"; // Ajustá la ruta
+import Link from "next/link";
+import "../styles/WorkSection.css";
 
 const WorkSection = () => {
-  // --- ESTADO PARA EL DESPLIEGUE ---
-  // Guardamos el ID del proyecto que está actualmente expandido
   const [expandedProjectId, setExpandedProjectId] = useState(null);
 
-  // --- DATOS DE LOS PROYECTOS (Actualizados con detalles) ---
   const projects = [
     {
       id: "01",
       name: "MORIZZIO",
       role: "Real Estate App",
-      image: "/morizzio-preview.jpg", // Asegurate de tener esta foto en /public
+      image: "/morizzio-preview.jpg",
       technologies: [
         "Next.js",
         "Prisma",
@@ -27,7 +24,6 @@ const WorkSection = () => {
       liveUrl: "https://morizzio.vercel.app",
       typeUrl: "IR AL SITIO REAL",
     },
-
     {
       id: "02",
       name: "POWER! PORTFOLIO",
@@ -52,10 +48,7 @@ const WorkSection = () => {
     },
   ];
 
-  // Función para alternar (toggle) el despliegue de un proyecto
   const toggleProject = (projectId) => {
-    // Si hacés clic en el que ya está expandido, se colapsa.
-    // Si hacés clic en otro, se colapsa el actual y se expande el nuevo.
     setExpandedProjectId(expandedProjectId === projectId ? null : projectId);
   };
 
@@ -75,23 +68,18 @@ const WorkSection = () => {
               className={`work-row ${isExpanded ? "expanded" : ""}`}
               onClick={() => toggleProject(project.id)}
             >
-              {/* --- PARTE SUPERIOR (Visible Siempre) --- */}
               <div className="row-header">
                 <div className="work-info">
                   <span className="work-id">{project.id}</span>
                   <h3 className="work-name">{project.name}</h3>
                 </div>
-                {/* El rol se fada y sube un poquito cuando se expande el resto */}
                 <span className={`work-role ${isExpanded ? "is-faded" : ""}`}>
                   {project.role}
                 </span>
               </div>
 
-              {/* --- DETALLES DESPLEGABLES (Ocultos por defecto) --- */}
-              {/* Esta es la cortina suave que se abre hacia abajo */}
               <div className="row-details">
                 <div className="detail-inner-content">
-                  {/* Imagen Estática Grande */}
                   <div className="detail-image-wrapper">
                     <img
                       src={project.image}
@@ -100,7 +88,6 @@ const WorkSection = () => {
                     />
                   </div>
 
-                  {/* Información Detallada */}
                   <div className="detail-info-wrapper">
                     <div className="detail-text-content">
                       <h4 className="detail-section-title">/ EL ROL /</h4>
@@ -109,7 +96,6 @@ const WorkSection = () => {
 
                     <div className="detail-tech-content">
                       <h4 className="detail-section-title">/ TECNOLOGÍAS /</h4>
-                      {/* Generamos tags amarillos para las tecnologías */}
                       <div className="tech-tags-grid">
                         {project.technologies.map((tech, tIndex) => (
                           <span key={tIndex} className="tech-tag">
@@ -119,8 +105,6 @@ const WorkSection = () => {
                       </div>
                     </div>
 
-                    {/* --- EL BOTÓN BRUTALISTA DE IR AL SITIO (Nueva Flecha Animada) --- */}
-                    {/* Interceptamos el clic para que no se colapse la fila al hacer clic en el botón */}
                     <div
                       className="detail-actions"
                       onClick={(e) => e.stopPropagation()}
@@ -131,7 +115,6 @@ const WorkSection = () => {
                         className="btn-live-site"
                       >
                         <span>{project.typeUrl}</span>
-                        {/* Esta es la flecha animada que ya tenías en el header, pero más gruesa */}
                         <span className="btn-arrow">
                           <svg
                             width="24"

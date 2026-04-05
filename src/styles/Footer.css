@@ -36,8 +36,10 @@
   color: #ffffff;
 }
 
-.footer-title span {
-  color: #555; /* Punto final sutil */
+/* CAMBIO: El punto final ahora toma el color del tema dinámicamente */
+.theme-dot {
+  color: var(--theme-accent);
+  transition: color 0.5s ease;
 }
 
 .footer-subtitle {
@@ -88,31 +90,29 @@
   text-decoration: none;
   text-transform: uppercase;
   letter-spacing: -1px;
-
-  /* Contenedor clave para ocultar lo que sale del borde */
   position: relative;
   display: inline-flex;
   overflow: hidden;
-  padding-bottom: 4px; /* Espacio para que letras como la 'p' no se corten */
+  padding-bottom: 4px;
 }
 
-/* El texto visible por defecto */
 .roll-link span {
   display: block;
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* El texto oculto (clonado del data-text) esperando abajo */
+/* CAMBIO: El texto que aparece al hacer hover tomará el color del tema activo */
 .roll-link::after {
   content: attr(data-text);
   position: absolute;
-  top: 100%; /* Empieza justo debajo del texto normal */
+  top: 100%;
   left: 0;
-  color: #ffffff;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  color: var(--theme-accent); /* Inyecta el color del tema */
+  transition:
+    transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.5s ease;
 }
 
-/* Al hacer hover: el span sube y desaparece, el ::after sube y toma su lugar */
 .roll-link:hover span {
   transform: translateY(-100%);
 }
@@ -124,8 +124,27 @@
 /* Reducimos el tamaño para los links de contacto directo para balancear visualmente */
 .contact-group:not(.socials) .roll-link {
   font-size: clamp(20px, 2.5vw, 32px);
-  text-transform: none; /* Dejamos el email y teléfono normales */
+  text-transform: none;
   letter-spacing: 0;
+}
+
+/* =========================================
+   FOOTER: ESTILOS ESPECÍFICOS PARA EL CV
+   ========================================= */
+.cv-link {
+  margin-top: 16px;
+  /* CAMBIO: Color del CV en reposo toma el tema */
+  color: var(--theme-accent);
+  transition: color 0.5s ease;
+}
+
+.cv-link:hover {
+  color: #ffffff; /* Al hacer hover se vuelve blanco, invirtiendo la lógica de los otros links */
+}
+
+/* Para que el texto "oculto" del CV que sube sea blanco (ya que la base es de color) */
+.cv-link::after {
+  color: #ffffff !important;
 }
 
 /* =========================================
@@ -142,34 +161,91 @@
   padding-top: 24px;
 }
 
-/* RESPONSIVE BÁSICO */
+.designer-link {
+  color: #888;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.designer-link:hover {
+  color: var(--theme-accent); /* Otro toque sutil del tema */
+}
+
+/* =========================================
+   RESPONSIVE AVANZADO
+   ========================================= */
+
+/* Tablets (Pantallas medianas) */
+@media (max-width: 1024px) {
+  .premium-footer {
+    padding: 100px 30px 30px 30px;
+  }
+
+  .footer-container {
+    gap: 60px;
+  }
+
+  .footer-bottom {
+    gap: 40px;
+  }
+}
+
+/* Celulares grandes / Tablets verticales */
 @media (max-width: 768px) {
+  .premium-footer {
+    padding: 80px 20px 30px 20px;
+  }
+
+  .footer-container {
+    gap: 50px;
+  }
+
   .footer-bottom {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 50px;
+    padding-top: 40px;
+  }
+
+  .contact-group {
+    gap: 16px;
   }
 
   .social-links-wrapper {
     flex-direction: column;
-    gap: 16px;
+    gap: 20px;
   }
 
   .footer-copy {
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
     text-align: center;
+    padding-top: 30px;
   }
 }
-/* =========================================
-   FOOTER: ESTILOS ESPECÍFICOS PARA EL CV
-   ========================================= */
 
-.cv-link {
-  margin-top: 16px; /* Añade un poco de espacio encima del link del CV */
-  color: #f0bc00; /* Un color ligeramente distinto para destacarlo sutilmente */
-}
+/* Celulares pequeños (Pantallas muy angostas) */
+@media (max-width: 480px) {
+  .premium-footer {
+    padding: 60px 15px 25px 15px;
+  }
 
-/* Y si quieres que en hover vuelva a blanco: */
-.cv-link:hover {
-  color: #ffffff;
+  /* Ajustamos el tamaño mínimo de fuente para que el email largo no se corte */
+  .contact-group:not(.socials) .roll-link {
+    font-size: clamp(15px, 4.5vw, 20px);
+  }
+
+  /* Ajuste sutil para los links de redes sociales en mobile */
+  .roll-link {
+    font-size: clamp(20px, 6vw, 24px);
+  }
+
+  .footer-title {
+    /* Nos aseguramos de que el título "HABLEMOS." no quede desproporcionado */
+    font-size: clamp(48px, 15vw, 60px);
+  }
+
+  .footer-subtitle {
+    font-size: 16px;
+    line-height: 1.4;
+  }
 }

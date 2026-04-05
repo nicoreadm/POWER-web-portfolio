@@ -1,4 +1,26 @@
 /* =========================================
+   0. VARIABLES DE TEMA DINÁMICAS
+   ========================================= */
+/* Heart: Blanco crema */
+:root[data-theme="heart"] {
+  --theme-bg: #f5f4ef;
+}
+
+/* Power: Amarillo vibrante original */
+:root[data-theme="power"] {
+  --theme-bg: #ffde00;
+}
+
+/* Gyro: Verde acero/menta vibrante (estilo Steel Ball Run) */
+:root[data-theme="gyro"] {
+  --theme-bg: #00e676;
+}
+
+:root[data-theme="teto"] {
+  --theme-bg: #a82a2a;
+}
+
+/* =========================================
    1. HERO TRACK & SCROLL
    ========================================= */
 .hero-track {
@@ -19,7 +41,9 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  background-color: #ffde00;
+  /* CAMBIO: Usar variable en lugar de #ffde00 */
+  background-color: var(--theme-bg);
+  transition: background-color 0.5s ease; /* Transición suave al cambiar de tema */
 }
 
 /* =========================================
@@ -28,9 +52,11 @@
 .cinema-border {
   height: 15vh;
   width: 100%;
-  background-color: #ffde00;
+  /* CAMBIO: Usar variable */
+  background-color: var(--theme-bg);
   z-index: 5;
   position: relative;
+  transition: background-color 0.5s ease;
 }
 
 /* =========================================
@@ -100,10 +126,12 @@
    7. INFO SECTION (EDITORIAL GRID)
    ========================================= */
 .info-section {
-  background-color: #ffde00;
+  /* CAMBIO: Usar variable */
+  background-color: var(--theme-bg);
   width: 100%;
   padding: 100px 5vw 150px 5vw;
   color: #0f1115;
+  transition: background-color 0.5s ease;
 }
 
 .info-grid {

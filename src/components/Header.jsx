@@ -1,21 +1,84 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import { useTheme } from "./ThemeContext"; // Ajusta la ruta si es necesario
 import "../styles/Header.css";
 
+// --- DICCIONARIO DE TEMAS ---
+const THEMES_CONFIG = {
+  heart: {
+    id: "heart",
+    title: "HEART !",
+    gif: "/heart-head.gif",
+    sound: "/heart-audio.mp3",
+  },
+  power: {
+    id: "power",
+    title: "POWER !",
+    gif: "/power-head.gif",
+    sound: "/power-audio.mp3",
+  },
+  gyro: {
+    id: "gyro",
+    title: "GO GO ZEPPELI!",
+    gif: "/gyro-head.gif",
+    sound: "/gyro-audio.mp3",
+  },
+  teto: {
+    id: "teto",
+    title: "KASANE TETO",
+    gif: "/teto-head.gif",
+    sound: "/teto-audio.mp3",
+  },
+};
+
 const Header = () => {
+  const { theme, changeTheme } = useTheme();
+  const currentThemeData = THEMES_CONFIG[theme] || THEMES_CONFIG.heart;
+
+  // --- REPRODUCTORES DE AUDIO ---
+  // 1. Audio para el cambio de tema (específico)
+  const audioPlay = (soundPath) => {
+    const audio = new Audio(soundPath);
+    audio.volume = 0.2;
+    audio.play().catch((e) => console.log("Error: ", e));
+  };
+
+  // 2. Audio genérico para Hover (cuando pasas el mouse)
+  const playHoverSound = () => {
+    // Sugerencia: usa un sonido muy corto y sutil
+    const hoverAudio = new Audio("/ui-hover.mp3");
+    hoverAudio.volume = 0.1; // Más bajito que el click
+    hoverAudio.play().catch((e) => console.log("Error hover: ", e));
+  };
+
+  // 3. Audio genérico para Click
+  const playClickSound = () => {
+    const clickAudio = new Audio("/ui-click.mp3");
+    clickAudio.volume = 0.2;
+    clickAudio.play().catch((e) => console.log("Error click: ", e));
+  };
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("home");
-  const [headerText, setHeaderText] = useState("POWER !");
+  const [headerText, setHeaderText] = useState(currentThemeData.title);
   const [isLogoHidden, setIsLogoHidden] = useState(false);
-  const [targetText, setTargetText] = useState("POWER !");
-
-  // --- NUEVO: ESTADO PARA EL BOTÓN DINÁMICO ---
-  // Modos: "chat" (manda a contacto) | "work" (manda a work)
+  const [targetText, setTargetText] = useState(currentThemeData.title);
   const [chatBtnMode, setChatBtnMode] = useState("chat");
 
   const logoChars = headerText.split("");
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    setIsThemeMenuOpen(false);
+  };
+
+  const toggleThemeMenu = () => {
+    setIsThemeMenuOpen(!isThemeMenuOpen);
+    setIsMenuOpen(false);
+  };
 
   useEffect(() => {
     let rafId;
@@ -36,12 +99,11 @@ const Header = () => {
             : Infinity;
           const vh = window.innerHeight;
 
-          let currentTarget = "POWER !";
+          let currentTarget = currentThemeData.title;
 
-          // Lógica de Título y Modo de Botón
           if (contactTop <= vh * 0.9) {
             currentTarget = contactTop <= vh * -0.001 ? "" : "CONTACTO";
-            setChatBtnMode("work"); // Cambia a "Ver mi trabajo" en el footer
+            setChatBtnMode("work");
           } else if (heroBottom <= vh / 2) {
             currentTarget = "CLIENTES ";
             setChatBtnMode("chat");
@@ -52,7 +114,7 @@ const Header = () => {
             currentTarget = "";
             setChatBtnMode("chat");
           } else {
-            currentTarget = "POWER !";
+            currentTarget = currentThemeData.title;
             setChatBtnMode("chat");
           }
           setTargetText(currentTarget);
@@ -61,13 +123,13 @@ const Header = () => {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
+    if (window.scrollY <= 50) setTargetText(currentThemeData.title);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       cancelAnimationFrame(rafId);
     };
-  }, []);
+  }, [theme, currentThemeData.title]);
 
-  // Orquestador de animación de letras (Logo)
   useEffect(() => {
     if (targetText === "") {
       setIsLogoHidden(true);
@@ -88,8 +150,6 @@ const Header = () => {
       setIsLogoHidden(false);
     }
   }, [targetText, headerText, isLogoHidden]);
-
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   const handleLinkClick = (e, sectionId) => {
     if (e) e.preventDefault();
@@ -114,36 +174,40 @@ const Header = () => {
     { name: "Home", id: "home" },
     { name: "Work", id: "work" },
     { name: "Clientes", id: "clientes" },
-    { name: "Contact", id: "contact" },
+    { name: "Contacto", id: "contact" },
   ];
+
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
       <div className="header-container">
-        {/* LOGO CONTAINER CON EL GIF INTEGRADO */}
+        {/* LOGO */}
         <div className={`logo-container ${isLogoHidden ? "hide-logo" : ""}`}>
-          <h1 className="logo-text">
-            {/* 1. EL GIF DE POWER (Tratado como una letra más para la animación) */}
-            {headerText === "POWER !" && (
+          <h1
+            className={`logo-text ${
+              headerText === "MI TRABAJO" || headerText === "CONTACTO"
+                ? "text-white"
+                : ""
+            }`}
+          >
+            {headerText === currentThemeData.title && (
               <span
                 className="logo-char power-gif-container"
-                style={{ "--char-index": 0 }} // Es la primera 'letra'
+                style={{ "--char-index": 0 }}
               >
                 <img
-                  src="/power-head.gif"
-                  alt="Power"
+                  src={currentThemeData.gif}
+                  alt={currentThemeData.id}
                   className="power-gif-circle"
                 />
               </span>
             )}
-
-            {/* 2. LAS LETRAS (Ajustamos el index si está el GIF) */}
             {logoChars.map((char, index) => (
               <span
                 key={index}
                 className="logo-char"
-                // Si el GIF está presente, las letras empiezan en el índice 1
                 style={{
-                  "--char-index": headerText === "POWER !" ? index + 1 : index,
+                  "--char-index":
+                    headerText === currentThemeData.title ? index + 1 : index,
                 }}
               >
                 {char === " " ? "\u00A0" : char}
@@ -154,20 +218,21 @@ const Header = () => {
 
         {/* CONTROLES */}
         <div className="controls-container">
+          {/* 1. BOTÓN DINÁMICO (CHATEA/TRABAJO) */}
           <button
             className="btn-chat-dynamic"
-            onClick={(e) =>
-              handleLinkClick(e, chatBtnMode === "chat" ? "contact" : "work")
-            }
+            onMouseEnter={playHoverSound}
+            onClick={(e) => {
+              playClickSound();
+              handleLinkClick(e, chatBtnMode === "chat" ? "contact" : "work");
+            }}
           >
-            {/* Contenedor con overflow hidden */}
             <div className="roll-visual-area">
               <div className={`roll-container ${chatBtnMode}`}>
                 <span className="roll-text">CHATEA CON NICO</span>
                 <span className="roll-text">VER MI TRABAJO</span>
               </div>
             </div>
-
             <span className="icon-chat">
               <svg
                 width="14"
@@ -187,9 +252,20 @@ const Header = () => {
               </svg>
             </span>
           </button>
+
+          {/* 2. MENÚ ORIGINAL DE NAVEGACIÓN */}
           <div className="menu-wrapper">
-            <button className="btn-menu" onClick={toggleMenu}>
-              <span className="menu-text">{isMenuOpen ? "CLOSE" : "MENU"}</span>
+            <button
+              className="btn-menu"
+              onMouseEnter={playHoverSound}
+              onClick={() => {
+                playClickSound();
+                toggleMenu();
+              }}
+            >
+              <span className="menu-text">
+                {isMenuOpen ? "CERRAR" : "MENU"}
+              </span>
               <span className={`icon-dots ${isMenuOpen ? "vertical" : ""}`}>
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="white">
                   <circle cx="7" cy="12" r="2"></circle>
@@ -206,7 +282,11 @@ const Header = () => {
                       className={
                         activeSection === link.id ? "active-section" : ""
                       }
-                      onClick={(e) => handleLinkClick(e, link.id)}
+                      onMouseEnter={playHoverSound}
+                      onClick={(e) => {
+                        playClickSound();
+                        handleLinkClick(e, link.id);
+                      }}
                     >
                       <span className="link-arrow">
                         <svg
@@ -225,6 +305,76 @@ const Header = () => {
                       </span>
                       {link.name}
                     </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </div>
+
+          {/* 3. MENÚ DE TEMAS */}
+          <div className="menu-wrapper">
+            <button
+              className="btn-menu"
+              onMouseEnter={playHoverSound}
+              onClick={() => {
+                playClickSound();
+                toggleThemeMenu();
+              }}
+            >
+              <span className="menu-text">
+                {isThemeMenuOpen ? "CLOSE" : "TEMA"}
+              </span>
+              <span
+                className={`icon-dots ${isThemeMenuOpen ? "vertical" : ""}`}
+              >
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <circle cx="12" cy="12" r="5"></circle>
+                  <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+                </svg>
+              </span>
+            </button>
+
+            <nav className={`dropdown-menu ${isThemeMenuOpen ? "open" : ""}`}>
+              <ul>
+                {Object.values(THEMES_CONFIG).map((t) => (
+                  <li key={t.id}>
+                    <button
+                      className={`theme-select-btn ${theme === t.id ? "active-section" : ""}`}
+                      onMouseEnter={playHoverSound}
+                      onClick={() => {
+                        // Aquí no llamamos a playClickSound para que no se superponga
+                        // con el sonido épico propio de cada tema.
+                        audioPlay(t.sound);
+                        changeTheme(t.id);
+                        setIsThemeMenuOpen(false);
+                      }}
+                    >
+                      <span className="link-arrow">
+                        <svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          strokeWidth="3"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        >
+                          <path d="M5 12h14"></path>
+                          <path d="m12 5 7 7-7 7"></path>
+                        </svg>
+                      </span>
+                      {t.id.toUpperCase()}
+                    </button>
                   </li>
                 ))}
               </ul>
