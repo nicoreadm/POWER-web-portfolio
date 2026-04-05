@@ -28,6 +28,18 @@
   --theme-text-hover: #0f1115;
 }
 
+:root[data-theme="miku"] {
+  --theme-accent: #01a2b8;
+  --theme-accent-rgb: 1, 162, 184;
+  --theme-text-hover: #0f1115;
+}
+
+:root[data-theme="kantan"] {
+  --theme-accent: #1b7161;
+  --theme-accent-rgb: 27, 113, 97;
+  --theme-text-hover: #f2f2f2; /* Texto claro para el fondo oscuro */
+}
+
 /* =========================================
    1. CONTENEDOR PRINCIPAL
    ========================================= */

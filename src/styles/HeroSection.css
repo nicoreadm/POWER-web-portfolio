@@ -20,6 +20,14 @@
   --theme-bg: #a82a2a;
 }
 
+:root[data-theme="miku"] {
+  --theme-bg: #01a2b8;
+}
+
+:root[data-theme="kantan"] {
+  --theme-bg: #1b7161;
+}
+
 /* =========================================
    1. HERO TRACK & SCROLL
    ========================================= */
