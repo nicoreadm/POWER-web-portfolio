@@ -9,41 +9,63 @@ const THEMES_CONFIG = {
   heart: {
     id: "heart",
     title: "HEART !",
-    gif: "/heart-head.gif", // Reemplaza con la ruta real de tu gif
+    gif: "/heart-head.gif",
+    sound: "/heart-audio.mp3",
   },
   power: {
     id: "power",
     title: "POWER !",
     gif: "/power-head.gif",
+    sound: "/power-audio.mp3",
   },
   gyro: {
     id: "gyro",
     title: "GO GO ZEPPELI!",
-    gif: "/gyro-head.gif", // Reemplaza con la ruta real
+    gif: "/gyro-head.gif",
+    sound: "/gyro-audio.mp3",
   },
   teto: {
     id: "teto",
     title: "KASANE TETO",
-    gif: "/teto-head.gif", // Reemplaza con la ruta real
+    gif: "/teto-head.gif",
+    sound: "/teto-audio.mp3",
   },
 };
 
 const Header = () => {
   const { theme, changeTheme } = useTheme();
-
   const currentThemeData = THEMES_CONFIG[theme] || THEMES_CONFIG.heart;
 
-  const [isScrolled, setIsScrolled] = useState(false);
+  // --- REPRODUCTORES DE AUDIO ---
+  // 1. Audio para el cambio de tema (específico)
+  const audioPlay = (soundPath) => {
+    const audio = new Audio(soundPath);
+    audio.volume = 0.2;
+    audio.play().catch((e) => console.log("Error: ", e));
+  };
 
+  // 2. Audio genérico para Hover (cuando pasas el mouse)
+  const playHoverSound = () => {
+    // Sugerencia: usa un sonido muy corto y sutil
+    const hoverAudio = new Audio("/ui-hover.mp3");
+    hoverAudio.volume = 0.1; // Más bajito que el click
+    hoverAudio.play().catch((e) => console.log("Error hover: ", e));
+  };
+
+  // 3. Audio genérico para Click
+  const playClickSound = () => {
+    const clickAudio = new Audio("/ui-click.mp3");
+    clickAudio.volume = 0.2;
+    clickAudio.play().catch((e) => console.log("Error click: ", e));
+  };
+
+  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
-
   const [activeSection, setActiveSection] = useState("home");
-
   const [headerText, setHeaderText] = useState(currentThemeData.title);
   const [isLogoHidden, setIsLogoHidden] = useState(false);
   const [targetText, setTargetText] = useState(currentThemeData.title);
-
   const [chatBtnMode, setChatBtnMode] = useState("chat");
 
   const logoChars = headerText.split("");
@@ -101,11 +123,7 @@ const Header = () => {
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-
-    if (window.scrollY <= 50) {
-      setTargetText(currentThemeData.title);
-    }
-
+    if (window.scrollY <= 50) setTargetText(currentThemeData.title);
     return () => {
       window.removeEventListener("scroll", handleScroll);
       cancelAnimationFrame(rafId);
@@ -162,11 +180,10 @@ const Header = () => {
   return (
     <header className={`header ${isScrolled ? "scrolled" : ""}`}>
       <div className="header-container">
-        {/* LOGO CONTAINER CON GIF DINÁMICO */}
+        {/* LOGO */}
         <div className={`logo-container ${isLogoHidden ? "hide-logo" : ""}`}>
           <h1
             className={`logo-text ${
-              // Aquí está el cambio: Se aplica la clase .text-white siempre que el texto sea MI TRABAJO o CONTACTO
               headerText === "MI TRABAJO" || headerText === "CONTACTO"
                 ? "text-white"
                 : ""
@@ -184,7 +201,6 @@ const Header = () => {
                 />
               </span>
             )}
-
             {logoChars.map((char, index) => (
               <span
                 key={index}
@@ -205,9 +221,11 @@ const Header = () => {
           {/* 1. BOTÓN DINÁMICO (CHATEA/TRABAJO) */}
           <button
             className="btn-chat-dynamic"
-            onClick={(e) =>
-              handleLinkClick(e, chatBtnMode === "chat" ? "contact" : "work")
-            }
+            onMouseEnter={playHoverSound}
+            onClick={(e) => {
+              playClickSound();
+              handleLinkClick(e, chatBtnMode === "chat" ? "contact" : "work");
+            }}
           >
             <div className="roll-visual-area">
               <div className={`roll-container ${chatBtnMode}`}>
@@ -237,7 +255,14 @@ const Header = () => {
 
           {/* 2. MENÚ ORIGINAL DE NAVEGACIÓN */}
           <div className="menu-wrapper">
-            <button className="btn-menu" onClick={toggleMenu}>
+            <button
+              className="btn-menu"
+              onMouseEnter={playHoverSound}
+              onClick={() => {
+                playClickSound();
+                toggleMenu();
+              }}
+            >
               <span className="menu-text">
                 {isMenuOpen ? "CERRAR" : "MENU"}
               </span>
@@ -257,7 +282,11 @@ const Header = () => {
                       className={
                         activeSection === link.id ? "active-section" : ""
                       }
-                      onClick={(e) => handleLinkClick(e, link.id)}
+                      onMouseEnter={playHoverSound}
+                      onClick={(e) => {
+                        playClickSound();
+                        handleLinkClick(e, link.id);
+                      }}
                     >
                       <span className="link-arrow">
                         <svg
@@ -284,7 +313,14 @@ const Header = () => {
 
           {/* 3. MENÚ DE TEMAS */}
           <div className="menu-wrapper">
-            <button className="btn-menu" onClick={toggleThemeMenu}>
+            <button
+              className="btn-menu"
+              onMouseEnter={playHoverSound}
+              onClick={() => {
+                playClickSound();
+                toggleThemeMenu();
+              }}
+            >
               <span className="menu-text">
                 {isThemeMenuOpen ? "CLOSE" : "TEMA"}
               </span>
@@ -312,9 +348,12 @@ const Header = () => {
                 {Object.values(THEMES_CONFIG).map((t) => (
                   <li key={t.id}>
                     <button
-                      /* La clase active-section se activa si el tema es el actual */
                       className={`theme-select-btn ${theme === t.id ? "active-section" : ""}`}
+                      onMouseEnter={playHoverSound}
                       onClick={() => {
+                        // Aquí no llamamos a playClickSound para que no se superponga
+                        // con el sonido épico propio de cada tema.
+                        audioPlay(t.sound);
                         changeTheme(t.id);
                         setIsThemeMenuOpen(false);
                       }}
