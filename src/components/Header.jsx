@@ -12,23 +12,38 @@ const THEMES_CONFIG = {
     gif: "/heart-head.gif",
     sound: "/heart-audio.mp3",
   },
+
+  kantan: {
+    id: "kantan",
+    title: "KANTAN !",
+    gif: "/kantan-head.gif",
+    sound: "/kantan-audio.mp3",
+  },
+
   power: {
     id: "power",
     title: "POWER !",
     gif: "/power-head.gif",
     sound: "/power-audio.mp3",
   },
-  gyro: {
+  /*gyro: {
     id: "gyro",
     title: "GO GO ZEPPELI!",
     gif: "/gyro-head.gif",
     sound: "/gyro-audio.mp3",
-  },
+  },*/
   teto: {
     id: "teto",
-    title: "KASANE TETO",
+    title: "TETO !",
     gif: "/teto-head.gif",
     sound: "/teto-audio.mp3",
+  },
+
+  miku: {
+    id: "miku",
+    title: "MIKU !",
+    gif: "/miku-head.gif",
+    sound: "/miku-audio.mp3",
   },
 };
 
@@ -322,7 +337,7 @@ const Header = () => {
               }}
             >
               <span className="menu-text">
-                {isThemeMenuOpen ? "CLOSE" : "TEMA"}
+                {isThemeMenuOpen ? "CERRAR" : "TEMA"}
               </span>
               <span
                 className={`icon-dots ${isThemeMenuOpen ? "vertical" : ""}`}

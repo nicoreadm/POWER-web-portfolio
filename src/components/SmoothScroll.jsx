@@ -51,7 +51,7 @@ function SmoothScroll({ children }) {
           targetScroll = document.body.scrollHeight;
           break;
         default:
-          return; // Si no es una tecla de scroll, cortamos la ejecución acá
+          return;
       }
 
       // Si presionó una tecla de scroll:

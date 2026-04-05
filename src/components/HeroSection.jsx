@@ -20,10 +20,12 @@ import "../styles/HeroSection.css";
 
 // --- DICCIONARIO DE VIDEOS POR TEMA ---
 const HERO_VIDEOS = {
-  heart: "/heart-video.mp4", // Asegúrate de tener estos videos optimizados
-  power: "/power-video.mp4", // Tu video original optimizado
+  heart: "/heart-video.mp4",
+  power: "/power-video.mp4",
   gyro: "/gyro-video.mp4",
   teto: "/teto-video.mp4",
+  miku: "/miku-video.mp4",
+  kantan: "/kantan-video.mp4",
 };
 
 const HeroSection = () => {
