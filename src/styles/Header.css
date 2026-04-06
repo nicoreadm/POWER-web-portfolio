@@ -60,14 +60,16 @@
   transition: color 0.3s ease;
 }
 
+.logo-text.text-eve-orange {
+  color: #ffb347;
+  transition: color 0.3s ease;
+}
+
 /* --- ESTILO BASE DE CADA LETRA (VISIBLE) --- */
 .logo-char {
   display: inline-block;
   opacity: 1;
   transform: translateY(0);
-
-  /* Animación para cuando APARECEN (suben) */
-  /* Usamos un delay basado en el índice para el efecto cascada */
   transition:
     opacity 0.3s ease,
     transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);

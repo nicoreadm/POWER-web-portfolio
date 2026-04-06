@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
-  title: "Nico Read PORTFOLIO",
+  title: "Nico Read Portfolio",
   description:
     "Personal portfolio of Nico Read, a passionate software developer specializing in React and Next.js. Explore my projects, skills, and contact information.",
 };
