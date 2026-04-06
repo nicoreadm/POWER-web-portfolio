@@ -40,6 +40,12 @@
   --theme-text-hover: #f2f2f2; /* Texto claro para el fondo oscuro */
 }
 
+:root[data-theme="eve"] {
+  --theme-accent: #ffb347;
+  --theme-accent-rgb: 39, 36, 40;
+  --theme-text-hover: #f2f2f2; /* Texto claro para el fondo oscuro */
+}
+
 /* =========================================
    1. CONTENEDOR PRINCIPAL
    ========================================= */

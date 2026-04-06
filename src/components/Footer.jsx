@@ -92,6 +92,17 @@ const Footer = () => {
         {/* --- COPYRIGHT --- */}
         <div className="footer-copy">
           <p>© {new Date().getFullYear()} NICO. ALL RIGHTS RESERVED.</p>
+
+          <p>
+            Proverbio: 3:5-6 -{" "}
+            <strong>
+              {" "}
+              "Confía en el Señor de todo corazón, y no te apoyes en tu propia
+              prudencia. Reconócelo en todos tus caminos, y él enderezará tus
+              sendas."{" "}
+            </strong>
+          </p>
+
           <p>
             DESIGNED BY:{" "}
             <strong>

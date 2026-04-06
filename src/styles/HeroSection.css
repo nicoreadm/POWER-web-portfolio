@@ -28,6 +28,34 @@
   --theme-bg: #1b7161;
 }
 
+:root[data-theme="eve"] {
+  --theme-bg: #272428;
+}
+
+/* =========================================
+   ESTILOS ESPECÍFICOS PARA TEMA: EVE
+   (Sección de Info y Tech Stack)
+   ========================================= */
+
+:root[data-theme="eve"] .info-title,
+:root[data-theme="eve"] .info-text,
+:root[data-theme="eve"] .info-text strong,
+:root[data-theme="eve"] .tech-icon,
+:root[data-theme="eve"] .tech-item {
+  color: #ffb347;
+  transition:
+    color 0.5s ease,
+    border-color 0.5s ease;
+}
+
+:root[data-theme="eve"] .info-title {
+  border-bottom-color: #ffb347;
+}
+
+:root[data-theme="eve"] .tech-wrapper:hover .tech-icon {
+  color: #ffffff;
+}
+
 /* =========================================
    1. HERO TRACK & SCROLL
    ========================================= */
@@ -128,6 +156,18 @@
 .massive-text.outline {
   color: transparent;
   -webkit-text-stroke: 4px #0f1115;
+}
+
+.massive-text.text-eve-orange {
+  color: #ffb347; /* Tu naranja vibrante */
+  transition: color 0.5s ease;
+}
+
+/* Para el texto que es solo borde (outline) */
+.massive-text.outline.text-eve-orange {
+  color: transparent; /* El relleno sigue siendo transparente */
+  -webkit-text-stroke: 4px #ff5a00; /* El borde se vuelve naranja */
+  transition: -webkit-text-stroke 0.5s ease;
 }
 
 /* =========================================

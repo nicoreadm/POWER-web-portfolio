@@ -26,6 +26,7 @@ const HERO_VIDEOS = {
   teto: "/teto-video.mp4",
   miku: "/miku-video.mp4",
   kantan: "/kantan-video.mp4",
+  eve: "/eve-video.mp4",
 };
 
 const HeroSection = () => {
@@ -121,8 +122,16 @@ const HeroSection = () => {
               className="marquee-container"
               style={{ transform: `translateX(${transformX}px)` }}
             >
-              <h1 className="massive-text">SOFTWARE DEVELOPER</h1>
-              <h1 className="massive-text outline">SOFTWARE DEVELOPER</h1>
+              <h1
+                className={`massive-text ${theme === "eve" ? "text-eve-orange" : ""}`}
+              >
+                SOFTWARE DEVELOPER
+              </h1>
+              <h1
+                className={`massive-text outline ${theme === "eve" ? "text-eve-orange" : ""}`}
+              >
+                SOFTWARE DEVELOPER
+              </h1>
             </div>
           </div>
           <div className="cinema-border bottom"></div>

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useTheme } from "./ThemeContext"; // Ajusta la ruta si es necesario
+import { useTheme } from "./ThemeContext";
 import "../styles/Header.css";
 
 // --- DICCIONARIO DE TEMAS ---
@@ -12,38 +12,35 @@ const THEMES_CONFIG = {
     gif: "/heart-head.gif",
     sound: "/heart-audio.mp3",
   },
-
   kantan: {
     id: "kantan",
     title: "KANTAN !",
     gif: "/kantan-head.gif",
     sound: "/kantan-audio.mp3",
   },
-
   power: {
     id: "power",
     title: "POWER !",
     gif: "/power-head.gif",
     sound: "/power-audio.mp3",
   },
-  /*gyro: {
-    id: "gyro",
-    title: "GO GO ZEPPELI!",
-    gif: "/gyro-head.gif",
-    sound: "/gyro-audio.mp3",
-  },*/
   teto: {
     id: "teto",
     title: "TETO !",
     gif: "/teto-head.gif",
     sound: "/teto-audio.mp3",
   },
-
   miku: {
     id: "miku",
     title: "MIKU !",
     gif: "/miku-head.gif",
     sound: "/miku-audio.mp3",
+  },
+  eve: {
+    id: "eve",
+    title: "EVE !",
+    gif: "/eve-head.gif",
+    sound: "/eve-audio.mp3",
   },
 };
 
@@ -51,29 +48,43 @@ const Header = () => {
   const { theme, changeTheme } = useTheme();
   const currentThemeData = THEMES_CONFIG[theme] || THEMES_CONFIG.heart;
 
-  // --- REPRODUCTORES DE AUDIO ---
-  // 1. Audio para el cambio de tema (específico)
+  // --- NUEVO: ESTADO DE MUTE ---
+  const [isMuted, setIsMuted] = useState(false);
+
+  // --- REPRODUCTORES DE AUDIO (AHORA RESPETAN EL MUTE) ---
   const audioPlay = (soundPath) => {
+    if (isMuted) return; // Si está muteado, salimos de la función
     const audio = new Audio(soundPath);
     audio.volume = 0.2;
     audio.play().catch((e) => console.log("Error: ", e));
   };
 
-  // 2. Audio genérico para Hover (cuando pasas el mouse)
   const playHoverSound = () => {
-    // Sugerencia: usa un sonido muy corto y sutil
+    if (isMuted) return; // Si está muteado, no reproducimos hover
     const hoverAudio = new Audio("/ui-hover.mp3");
-    hoverAudio.volume = 0.1; // Más bajito que el click
+    hoverAudio.volume = 0.1;
     hoverAudio.play().catch((e) => console.log("Error hover: ", e));
   };
 
-  // 3. Audio genérico para Click
   const playClickSound = () => {
+    if (isMuted) return; // Si está muteado, no reproducimos click
     const clickAudio = new Audio("/ui-click.mp3");
     clickAudio.volume = 0.2;
     clickAudio.play().catch((e) => console.log("Error click: ", e));
   };
 
+  // Función para alternar el sonido
+  const toggleMute = () => {
+    setIsMuted(!isMuted);
+    // Reproducimos un clickcito solo si lo estamos ENCENDIENDO
+    if (isMuted) {
+      const clickAudio = new Audio("/ui-click.mp3");
+      clickAudio.volume = 0.2;
+      clickAudio.play().catch((e) => console.log("Error click: ", e));
+    }
+  };
+
+  // --- RESTO DE TUS ESTADOS ---
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
@@ -95,6 +106,7 @@ const Header = () => {
     setIsMenuOpen(false);
   };
 
+  // --- EFECTOS DE SCROLL Y LOGO (Mantenidos igual) ---
   useEffect(() => {
     let rafId;
     const handleScroll = () => {
@@ -186,8 +198,8 @@ const Header = () => {
   };
 
   const navLinks = [
-    { name: "Home", id: "home" },
-    { name: "Work", id: "work" },
+    { name: "Inicio", id: "home" },
+    { name: "Trabajo", id: "work" },
     { name: "Clientes", id: "clientes" },
     { name: "Contacto", id: "contact" },
   ];
@@ -202,7 +214,7 @@ const Header = () => {
               headerText === "MI TRABAJO" || headerText === "CONTACTO"
                 ? "text-white"
                 : ""
-            }`}
+            } ${headerText === "EVE !" ? "text-eve-orange " : ""}`}
           >
             {headerText === currentThemeData.title && (
               <span
@@ -268,7 +280,7 @@ const Header = () => {
             </span>
           </button>
 
-          {/* 2. MENÚ ORIGINAL DE NAVEGACIÓN */}
+          {/* 2. MENÚ DE NAVEGACIÓN */}
           <div className="menu-wrapper">
             <button
               className="btn-menu"
@@ -357,7 +369,6 @@ const Header = () => {
                 </svg>
               </span>
             </button>
-
             <nav className={`dropdown-menu ${isThemeMenuOpen ? "open" : ""}`}>
               <ul>
                 {Object.values(THEMES_CONFIG).map((t) => (
@@ -366,8 +377,6 @@ const Header = () => {
                       className={`theme-select-btn ${theme === t.id ? "active-section" : ""}`}
                       onMouseEnter={playHoverSound}
                       onClick={() => {
-                        // Aquí no llamamos a playClickSound para que no se superponga
-                        // con el sonido épico propio de cada tema.
                         audioPlay(t.sound);
                         changeTheme(t.id);
                         setIsThemeMenuOpen(false);
@@ -395,6 +404,50 @@ const Header = () => {
               </ul>
             </nav>
           </div>
+
+          {/* 4. NUEVO: BOTÓN DE MUTE */}
+          <button
+            className="btn-menu mute-btn" // Usamos btn-menu como base para que comparta el estilo
+            onMouseEnter={playHoverSound}
+            onClick={toggleMute}
+            style={{ padding: "0 16px", minWidth: "auto" }} // Ajustes inline para que sea cuadradito/redondo
+            title={isMuted ? "Activar Sonido" : "Silenciar"}
+          >
+            <span className="icon-dots">
+              {isMuted ? (
+                // Ícono de "Mute" (Altavoz tachado o sin ondas)
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <line x1="23" y1="9" x2="17" y2="15"></line>
+                  <line x1="17" y1="9" x2="23" y2="15"></line>
+                </svg>
+              ) : (
+                // Ícono de "Volumen Alto"
+                <svg
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                  <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                </svg>
+              )}
+            </span>
+          </button>
         </div>
       </div>
     </header>

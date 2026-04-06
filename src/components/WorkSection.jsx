@@ -21,7 +21,7 @@ const WorkSection = () => {
       ],
       details:
         "Diseño y desarrollo de una plataforma completa para el sector inmobiliario de lujo. Incluye panel de control para agentes, rastreo de propiedades en tiempo real y sistema de autenticación avanzada.",
-      liveUrl: "https://morizzio.vercel.app",
+      liveUrl: "https://morizziopropiedades.com",
       typeUrl: "IR AL SITIO REAL",
     },
     {
@@ -90,7 +90,9 @@ const WorkSection = () => {
 
                   <div className="detail-info-wrapper">
                     <div className="detail-text-content">
-                      <h4 className="detail-section-title">/ EL ROL /</h4>
+                      <h4 className="detail-section-title">
+                        /¿De qué se trata?/
+                      </h4>
                       <p className="detail-description">{project.details}</p>
                     </div>
 
