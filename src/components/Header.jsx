@@ -9,38 +9,44 @@ const THEMES_CONFIG = {
   heart: {
     id: "heart",
     title: "HEART !",
-    gif: "/heart-head.gif",
-    sound: "/heart-audio.mp3",
+    gif: "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/heart-head.gif",
+    sound:
+      "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/heart-audio.mp3",
   },
   kantan: {
     id: "kantan",
     title: "KANTAN !",
-    gif: "/kantan-head.gif",
-    sound: "/kantan-audio.mp3",
+    gif: "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/kantan-head.gif",
+    sound:
+      "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/kantan-audio.mp3",
   },
   power: {
     id: "power",
     title: "POWER !",
-    gif: "/power-head.gif",
-    sound: "/power-audio.mp3",
+    gif: "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/power-head.gif",
+    sound:
+      "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/power-audio.mp3",
   },
   teto: {
     id: "teto",
     title: "TETO !",
-    gif: "/teto-head.gif",
-    sound: "/teto-audio.mp3",
+    gif: "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/teto-head.gif",
+    sound:
+      "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/teto-audio.mp3",
   },
   miku: {
     id: "miku",
     title: "MIKU !",
-    gif: "/miku-head.gif",
-    sound: "/miku-audio.mp3",
+    gif: "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/miku-head.gif",
+    sound:
+      "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/miku-audio.mp3",
   },
   eve: {
     id: "eve",
     title: "EVE !",
-    gif: "/eve-head.gif",
-    sound: "/eve-audio.mp3",
+    gif: "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/eve-head.gif",
+    sound:
+      "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/eve-audio.mp3",
   },
 };
 
