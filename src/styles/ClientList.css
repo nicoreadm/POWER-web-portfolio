@@ -20,15 +20,13 @@
 .encabezado-superior {
   display: flex;
   justify-content: space-between;
-  padding: clamp(12px, 2vw, 20px) clamp(16px, 4vw, 40px);
-  font-size: clamp(12px, 1.8vw, 14px);
+  padding: 20px 40px;
+  font-size: 14px;
   font-weight: 500;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   background-color: var(--color-fondo);
   position: relative; /* Asegura que el encabezado esté sobre la capa de máscara */
   z-index: 10;
-  flex-wrap: wrap;
-  gap: clamp(8px, 1vw, 12px);
 }
 
 /* CAPA DE EFECTO DE MÁSCARA Y DESENFOQUE */
@@ -46,14 +44,14 @@
   mask-image: radial-gradient(
     circle at center,
     transparent 0px,
-    transparent clamp(80px, 15vw, 150px),
-    black clamp(120px, 20vw, 200px)
+    transparent 150px,
+    black 200px
   );
   -webkit-mask-image: radial-gradient(
     circle at center,
     transparent 0px,
-    transparent clamp(80px, 15vw, 150px),
-    black clamp(120px, 20vw, 200px)
+    transparent 150px,
+    black 200px
   );
 }
 
@@ -64,7 +62,7 @@
   flex-direction: column;
   justify-content: space-around;
   overflow: hidden;
-  padding: clamp(12px, 2vw, 20px) 0;
+  padding: 20px 0;
   position: relative;
   z-index: 1;
 }
@@ -75,11 +73,37 @@
   display: flex;
 }
 
+.track {
+  display: flex;
+  width: max-content;
+}
+
+.marquesina-contenido {
+  display: flex;
+  white-space: nowrap;
+  flex-shrink: 0;
+  padding-right: 3vw;
+}
+
+/* ESTILOS ESPECÍFICOS DE ANIMACIÓN POR HILERA */
+.track-1 {
+  animation: moverIzquierda 45s linear infinite;
+}
+.track-2 {
+  animation: moverDerecha 75s linear infinite;
+}
+.track-3 {
+  animation: moverIzquierda 60s linear infinite;
+}
+.track-4 {
+  animation: moverDerecha 90s linear infinite;
+}
+
 .marca {
-  font-size: clamp(4vw, 7vw, 10vw);
+  font-size: 8vw;
   font-weight: 900;
   text-transform: uppercase;
-  margin-right: clamp(1.5vw, 2.5vw, 3vw);
+  margin-right: 3vw;
   display: inline-block;
 }
 
@@ -99,36 +123,5 @@
   }
   100% {
     transform: translateX(0);
-  }
-}
-
-/* RESPONSIVE BREAKPOINTS */
-@media (max-width: 768px) {
-  .contenedor-principal {
-    overflow-x: auto;
-  }
-
-  .marca {
-    font-size: clamp(3.5vw, 6vw, 8vw);
-    margin-right: clamp(1vw, 2vw, 2.5vw);
-  }
-
-  .seccion-hileras {
-    padding: clamp(8px, 1.5vw, 15px) 0;
-  }
-}
-
-@media (max-width: 480px) {
-  .encabezado-superior {
-    padding: clamp(10px, 1.5vw, 12px) clamp(12px, 3vw, 16px);
-    font-size: clamp(11px, 1.5vw, 12px);
-  }
-
-  .marca {
-    font-size: clamp(3vw, 5vw, 7vw);
-  }
-
-  .reveal-mask {
-    backdrop-filter: blur(6px);
   }
 }
