@@ -458,6 +458,55 @@ const Header = () => {
           </button>
         </div>
       </div>
+      <button
+        className="md:hidden relative z-[101] w-10 h-10 flex flex-col justify-center items-center gap-[6px] focus:outline-none"
+        onClick={toggleMenu}
+        aria-label="Toggle Menu"
+      >
+        <span
+          className={`block w-8 h-[2px] bg-white transition-all duration-300 ease-in-out ${
+            isOpen ? "transform rotate-45 translate-y-[8px]" : ""
+          }`}
+        />
+        <span
+          className={`block w-8 h-[2px] bg-white transition-all duration-300 ease-in-out ${
+            isOpen ? "opacity-0 translate-x-4" : "opacity-100"
+          }`}
+        />
+        <span
+          className={`block w-8 h-[2px] bg-white transition-all duration-300 ease-in-out ${
+            isOpen ? "transform -rotate-45 -translate-y-[8px]" : ""
+          }`}
+        />
+      </button>
+
+      <div
+        className={`fixed inset-0 bg-[#0a0a0a] z-[90] flex flex-col justify-center px-6 transition-all duration-700 cubic-bezier(0.76, 0, 0.24, 1) ${
+          isOpen
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none delay-200"
+        }`}
+      >
+        <nav className="flex flex-col gap-4 mt-12">
+          {NAV_ITEMS.map((item, index) => (
+            <div
+              key={item.name}
+              className={`overflow-hidden transition-all duration-500 ${
+                isOpen ? "opacity-100" : "opacity-0"
+              }`}
+              style={{ transitionDelay: `${isOpen ? index * 100 + 200 : 0}ms` }}
+            >
+              <Link
+                href={item.href}
+                onClick={closeMenu}
+                className="mobile-nav-link block text-[clamp(40px,12vw,80px)] font-black tracking-tighter uppercase leading-none text-white"
+              >
+                {item.name}
+              </Link>
+            </div>
+          ))}
+        </nav>
+      </div>
     </header>
   );
 };

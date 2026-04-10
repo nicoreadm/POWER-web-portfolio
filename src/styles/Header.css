@@ -546,3 +546,34 @@
 .dropdown-menu ul li .theme-select-btn:hover {
   opacity: 0.7;
 }
+
+/* =========================================
+   HEADER & NAVIGATION
+   ========================================= */
+
+/* Hover para los links de Desktop */
+.hover-theme-text:hover {
+  color: var(--theme-accent) !important;
+}
+
+/* Efecto para los links del menú móvil gigante */
+.mobile-nav-link {
+  position: relative;
+  transition:
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    color 0.4s ease;
+  transform-origin: left;
+}
+
+.mobile-nav-link:hover {
+  color: var(--theme-accent);
+  transform: translateX(
+    15px
+  ); /* Pequeño desplazamiento hacia la derecha al hacer hover */
+}
+
+/* Opcional: Un stroke (borde) al texto si quieres que se vea más brutalista */
+.mobile-nav-link:active {
+  color: transparent;
+  -webkit-text-stroke: 2px var(--theme-accent);
+}
