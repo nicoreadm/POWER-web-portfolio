@@ -340,4 +340,7 @@
   .btn-live-site {
     align-self: stretch;
   }
+  .work-role {
+    display: none !important;
+  }
 }
