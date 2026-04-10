@@ -116,19 +116,18 @@
 
 @media (max-width: 480px) {
   .header {
-    padding: clamp(8px, 3vw, 12px) 0;
+    padding: clamp(12px, 3vw, 16px) 0;
   }
 
   .logo-text {
-    /* CAMBIO: Aumentado para Celulares pequeños */
-    font-size: clamp(26px, 8vw, 40px);
+    font-size: clamp(40px, 11vw, 55px);
+    letter-spacing: -1.5px;
   }
 
   .controls-container {
     gap: 8px;
   }
 }
-
 .btn-chat,
 .btn-menu {
   display: flex;
