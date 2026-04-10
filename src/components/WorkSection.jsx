@@ -26,12 +26,18 @@ const WorkSection = () => {
     },
     {
       id: "02",
-      name: "POWER! PORTFOLIO",
+      name: "DOSSIER PORTFOLIO",
       role: "Personal Portfolio",
       image: "/portfolio-preview.jpg",
-      technologies: ["Next.js", "JavaScript", "CSS", "React"],
+      technologies: [
+        "Next.js",
+        "JavaScript",
+        "CSS",
+        "React",
+        "Vercel BLOB Storage",
+      ],
       details:
-        "Sistema de autenticación robusto y escalable. Incluye Middlewares de seguridad, manejo de Refresh Tokens y persistencia de sesión con MySQL.",
+        "DOSSIER es un portfolio interactivo de alto rendimiento construido con Next.js (App Router) y React. Demuestra dominio en el desarrollo frontend moderno mediante la implementación de un sistema de temas dinámicos (Context API), manipulación de estado complejo, scroll suavizado customizado y animaciones inmersivas, manteniendo un enfoque estricto en la arquitectura del código y la experiencia de usuario (UX).",
       liveUrl: "https://github.com/nicoreadm/POWER-web-portfolio",
       typeUrl: "IR A GITHUB",
     },

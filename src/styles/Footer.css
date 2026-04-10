@@ -2,7 +2,7 @@
    FOOTER GENERAL
    ========================================= */
 .premium-footer {
-  background-color: #0f1115; /* Fondo oscuro elegante */
+  background-color: #0f1115;
   color: #f2f2f2;
   padding: 120px 40px 40px 40px;
   position: relative;
@@ -28,22 +28,26 @@
 }
 
 .footer-title {
-  font-size: clamp(60px, 12vw, 180px); /* Escalado fluido perfecto */
+  font-size: clamp(
+    50px,
+    12vw,
+    180px
+  ); /* Ajuste: Bajé el mínimo a 50px para móviles muy estrechos */
   font-weight: 900;
   line-height: 0.8;
   letter-spacing: -0.04em;
   margin: 0;
   color: #ffffff;
+  word-wrap: break-word; /* Seguridad para que el título no desborde */
 }
 
-/* CAMBIO: El punto final ahora toma el color del tema dinámicamente */
 .theme-dot {
   color: var(--theme-accent);
   transition: color 0.5s ease;
 }
 
 .footer-subtitle {
-  font-size: clamp(18px, 2vw, 24px);
+  font-size: clamp(16px, 2vw, 24px);
   color: #a0a4ab;
   font-weight: 400;
   max-width: 500px;
@@ -54,7 +58,10 @@
    ========================================= */
 .footer-bottom {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(280px, 1fr)
+  ); /* Ajuste automático fluido sin media queries estrictas */
   gap: 60px;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   padding-top: 60px;
@@ -64,6 +71,9 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  /* Seguridad: Evita que el contenedor crezca más allá de la pantalla */
+  max-width: 100%;
+  overflow: hidden;
 }
 
 .group-label {
@@ -81,7 +91,7 @@
 }
 
 /* =========================================
-   ANIMACIÓN "TEXT ROLL" (EL TOQUE PREMIUM)
+   ANIMACIÓN "TEXT ROLL"
    ========================================= */
 .roll-link {
   font-size: clamp(24px, 3vw, 42px);
@@ -101,13 +111,12 @@
   transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* CAMBIO: El texto que aparece al hacer hover tomará el color del tema activo */
 .roll-link::after {
   content: attr(data-text);
   position: absolute;
   top: 100%;
   left: 0;
-  color: var(--theme-accent); /* Inyecta el color del tema */
+  color: var(--theme-accent);
   transition:
     transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
     color 0.5s ease;
@@ -121,28 +130,28 @@
   transform: translateY(-100%);
 }
 
-/* Reducimos el tamaño para los links de contacto directo para balancear visualmente */
+/* Enlaces de contacto (Emails largos) */
 .contact-group:not(.socials) .roll-link {
-  font-size: clamp(20px, 2.5vw, 32px);
+  font-size: clamp(18px, 2.5vw, 32px);
   text-transform: none;
   letter-spacing: 0;
+  word-break: break-all; /* CLAVE: Rompe correos electrónicos largos en múltiples líneas si no entran */
+  white-space: normal;
 }
 
 /* =========================================
-   FOOTER: ESTILOS ESPECÍFICOS PARA EL CV
+   FOOTER: ESTILOS CV
    ========================================= */
 .cv-link {
   margin-top: 16px;
-  /* CAMBIO: Color del CV en reposo toma el tema */
   color: var(--theme-accent);
   transition: color 0.5s ease;
 }
 
 .cv-link:hover {
-  color: #ffffff; /* Al hacer hover se vuelve blanco, invirtiendo la lógica de los otros links */
+  color: #ffffff;
 }
 
-/* Para que el texto "oculto" del CV que sube sea blanco (ya que la base es de color) */
 .cv-link::after {
   color: #ffffff !important;
 }
@@ -154,6 +163,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; /* Asegura que no se salga de la pantalla */
+  gap: 16px;
   font-size: 12px;
   font-weight: 500;
   color: #666;
@@ -168,82 +179,51 @@
 }
 
 .designer-link:hover {
-  color: var(--theme-accent); /* Otro toque sutil del tema */
+  color: var(--theme-accent);
 }
 
 /* =========================================
    RESPONSIVE AVANZADO
    ========================================= */
 
-/* Tablets (Pantallas medianas) */
 @media (max-width: 1024px) {
   .premium-footer {
     padding: 100px 30px 30px 30px;
   }
-
   .footer-container {
     gap: 60px;
   }
-
-  .footer-bottom {
-    gap: 40px;
-  }
 }
 
-/* Celulares grandes / Tablets verticales */
 @media (max-width: 768px) {
   .premium-footer {
     padding: 80px 20px 30px 20px;
   }
-
   .footer-container {
     gap: 50px;
   }
-
   .footer-bottom {
-    grid-template-columns: 1fr;
     gap: 50px;
     padding-top: 40px;
   }
-
   .contact-group {
     gap: 16px;
   }
-
   .social-links-wrapper {
     flex-direction: column;
     gap: 20px;
   }
-
   .footer-copy {
     flex-direction: column;
-    gap: 16px;
     text-align: center;
     padding-top: 30px;
   }
 }
 
-/* Celulares pequeños (Pantallas muy angostas) */
 @media (max-width: 480px) {
   .premium-footer {
     padding: 60px 15px 25px 15px;
   }
-
-  /* Ajustamos el tamaño mínimo de fuente para que el email largo no se corte */
-  .contact-group:not(.socials) .roll-link {
-    font-size: clamp(15px, 4.5vw, 20px);
-  }
-
-  /* Ajuste sutil para los links de redes sociales en mobile */
-  .roll-link {
-    font-size: clamp(20px, 6vw, 24px);
-  }
-
-  .footer-title {
-    /* Nos aseguramos de que el título "HABLEMOS." no quede desproporcionado */
-    font-size: clamp(48px, 15vw, 60px);
-  }
-
   .footer-subtitle {
     font-size: 16px;
     line-height: 1.4;

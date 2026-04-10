@@ -1,42 +1,31 @@
 /* =========================================
    0. VARIABLES DE TEMA DINÁMICAS
    ========================================= */
-/* Heart: Blanco crema */
 :root[data-theme="heart"] {
   --theme-bg: #f5f4ef;
 }
-
-/* Power: Amarillo vibrante original */
 :root[data-theme="power"] {
   --theme-bg: #ffde00;
 }
-
-/* Gyro: Verde acero/menta vibrante (estilo Steel Ball Run) */
 :root[data-theme="gyro"] {
   --theme-bg: #00e676;
 }
-
 :root[data-theme="teto"] {
   --theme-bg: #a82a2a;
 }
-
 :root[data-theme="miku"] {
   --theme-bg: #01a2b8;
 }
-
 :root[data-theme="kantan"] {
   --theme-bg: #1b7161;
 }
-
 :root[data-theme="eve"] {
   --theme-bg: #272428;
 }
 
 /* =========================================
    ESTILOS ESPECÍFICOS PARA TEMA: EVE
-   (Sección de Info y Tech Stack)
    ========================================= */
-
 :root[data-theme="eve"] .info-title,
 :root[data-theme="eve"] .info-text,
 :root[data-theme="eve"] .info-text strong,
@@ -77,9 +66,8 @@
   z-index: 1;
   display: flex;
   flex-direction: column;
-  /* CAMBIO: Usar variable en lugar de #ffde00 */
   background-color: var(--theme-bg);
-  transition: background-color 0.5s ease; /* Transición suave al cambiar de tema */
+  transition: background-color 0.5s ease;
 }
 
 /* =========================================
@@ -88,7 +76,6 @@
 .cinema-border {
   height: 15vh;
   width: 100%;
-  /* CAMBIO: Usar variable */
   background-color: var(--theme-bg);
   z-index: 5;
   position: relative;
@@ -151,6 +138,7 @@
   padding-right: 4vw;
   letter-spacing: -0.5vw;
   line-height: 0.85;
+  word-wrap: break-word; /* Responsive fix added */
 }
 
 .massive-text.outline {
@@ -159,14 +147,13 @@
 }
 
 .massive-text.text-eve-orange {
-  color: #ffb347; /* Tu naranja vibrante */
+  color: #ffb347;
   transition: color 0.5s ease;
 }
 
-/* Para el texto que es solo borde (outline) */
 .massive-text.outline.text-eve-orange {
-  color: transparent; /* El relleno sigue siendo transparente */
-  -webkit-text-stroke: 4px #ff5a00; /* El borde se vuelve naranja */
+  color: transparent;
+  -webkit-text-stroke: 4px #ff5a00;
   transition: -webkit-text-stroke 0.5s ease;
 }
 
@@ -174,7 +161,6 @@
    7. INFO SECTION (EDITORIAL GRID)
    ========================================= */
 .info-section {
-  /* CAMBIO: Usar variable */
   background-color: var(--theme-bg);
   width: 100%;
   padding: 100px 5vw 150px 5vw;
@@ -255,7 +241,7 @@
 }
 
 .tech-item {
-  font-size: 26px;
+  font-size: clamp(16px, 2vw, 26px); /* Responsive fix added */
   font-weight: 800;
   letter-spacing: -1px;
   color: #0f1115;
@@ -307,15 +293,9 @@
     grid-template-columns: 1fr;
     gap: 40px;
   }
-
   .tech-icon {
     font-size: 24px;
   }
-
-  .tech-item {
-    font-size: 18px;
-  }
-
   .stack-grid {
     gap: 20px 30px;
   }

@@ -1,29 +1,62 @@
 "use client";
-import { useRef, useEffect } from "react";
-import { ReactLenis } from "lenis/react";
 
-function SmoothScroll({ children }) {
-  // 1. Creamos una referencia para acceder al motor de Lenis
-  const lenisRef = useRef(null);
+// --- IMPORTS ---
+import React, { useRef, useEffect, useState } from "react";
+import { ReactLenis, useLenis } from "lenis/react";
+import Preloader from "./Preloader";
+import { ThemeProvider } from "./ThemeContext";
+
+// --- SCROLL CONTROLLER ---
+const ScrollController = ({ isLoading }) => {
+  const lenis = useLenis();
 
   useEffect(() => {
+    if (!lenis) return;
+
+    if (isLoading) {
+      lenis.stop();
+    } else {
+      lenis.start();
+    }
+  }, [lenis, isLoading]);
+
+  return null;
+};
+
+// --- MAIN COMPONENT ---
+function SmoothScroll({ children }) {
+  const lenisRef = useRef(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // --- KEYBOARD NAVIGATION LOGIC ---
+  useEffect(() => {
     const handleKeyDown = (e) => {
-      // Obtenemos la instancia actual de Lenis
+      if (isLoading) {
+        if (
+          [
+            "ArrowUp",
+            "ArrowDown",
+            "Space",
+            "PageDown",
+            "PageUp",
+            "Home",
+            "End",
+          ].includes(e.code)
+        ) {
+          e.preventDefault();
+        }
+        return;
+      }
+
       const lenis = lenisRef.current?.lenis;
       if (!lenis) return;
 
-      // Seguridad: Si el usuario está escribiendo en un formulario, no hacemos nada
       const activeTag = document.activeElement.tagName;
       if (["INPUT", "TEXTAREA", "SELECT", "BUTTON"].includes(activeTag)) return;
 
-      // Configuramos cuánto queremos que scrollee cada tecla
-      const arrowScrollAmount = 150; // Píxeles por cada toque de flecha
-      const pageScrollAmount = window.innerHeight - 50; // Casi toda la pantalla para PageDown/Space
-
+      const arrowScrollAmount = 150;
+      const pageScrollAmount = window.innerHeight - 50;
       let targetScroll = null;
-
-      // Usamos lenis.targetScroll (hacia dónde está yendo) en lugar de actualScroll
-      // para que si tocás la tecla rápido varias veces, no se trabe y acumule la distancia.
       const currentTarget = lenis.targetScroll;
 
       switch (e.code) {
@@ -54,13 +87,10 @@ function SmoothScroll({ children }) {
           return;
       }
 
-      // Si presionó una tecla de scroll:
       if (targetScroll !== null) {
-        e.preventDefault(); // Cancelamos el salto brusco de Windows/Mac
-
-        // Le decimos a Lenis que navegue suavemente hasta el nuevo punto
+        e.preventDefault();
         lenis.scrollTo(targetScroll, {
-          lerp: 0.1, // Nivel de suavizado (igual o similar al de tu rueda)
+          lerp: 0.1,
           duration: 1.2,
         });
       }
@@ -68,8 +98,9 @@ function SmoothScroll({ children }) {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, []);
+  }, [isLoading]);
 
+  // --- RENDER ---
   return (
     <ReactLenis
       ref={lenisRef}
@@ -84,7 +115,12 @@ function SmoothScroll({ children }) {
         infinite: false,
       }}
     >
-      {children}
+      <ScrollController isLoading={isLoading} />
+
+      <ThemeProvider>
+        <Preloader onComplete={() => setIsLoading(false)} />
+        {children}
+      </ThemeProvider>
     </ReactLenis>
   );
 }
