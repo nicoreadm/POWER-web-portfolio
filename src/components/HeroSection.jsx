@@ -20,13 +20,16 @@ import "../styles/HeroSection.css";
 
 // --- DICCIONARIO DE VIDEOS POR TEMA ---
 const HERO_VIDEOS = {
-  heart: "/heart-video.mp4",
-  power: "/power-video.mp4",
-  gyro: "/gyro-video.mp4",
-  teto: "/teto-video.mp4",
-  miku: "/miku-video.mp4",
-  kantan: "/kantan-video.mp4",
-  eve: "/eve-video.mp4",
+  heart:
+    "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/heart-video.mp4",
+  power:
+    "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/power-video.mp4",
+  gyro: "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/gyro-video.mp4",
+  teto: "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/teto-video.mp4",
+  miku: "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/miku-video.mp4",
+  kantan:
+    "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/kantan-video.mp4",
+  eve: "https://rn54h5xwzg8irffa.public.blob.vercel-storage.com/eve-video.mp4",
 };
 
 const HeroSection = () => {

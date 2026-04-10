@@ -1,0 +1,401 @@
+:root[data-theme="power"] {
+  --theme-accent: #ffde00;
+  --theme-accent-rgb: 255, 222, 0;
+  --theme-text-hover: #0f1115;
+}
+
+:root[data-theme="teto"] {
+  --theme-accent: #a82a2a;
+  --theme-accent-rgb: 168, 42, 42;
+  --theme-text-hover: #0f1115;
+}
+
+:root[data-theme="miku"] {
+  --theme-accent: #01a2b8;
+  --theme-accent-rgb: 1, 162, 184;
+  --theme-text-hover: #0f1115;
+}
+
+:root[data-theme="kantan"] {
+  --theme-accent: #1b7161;
+  --theme-accent-rgb: 27, 113, 97;
+  --theme-text-hover: #f2f2f2;
+}
+
+:root[data-theme="eve"] {
+  --theme-accent: #ffb347;
+  --theme-accent-rgb: 39, 36, 40;
+  --theme-text-hover: #f2f2f2;
+}
+
+/* =========================================
+   CONTENEDOR PRINCIPAL
+   ========================================= */
+.preloader-wrapper {
+  position: fixed;
+  inset: 0;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #0a0a0a;
+  transition: all 0.7s ease-out;
+  opacity: 1;
+}
+
+.preloader-wrapper.is-exit {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* =========================================
+   PATRÓN DE FONDO (Cuadrícula sutil)
+   ========================================= */
+.preloader-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.05;
+  background-image:
+    linear-gradient(to right, #ffffff 1px, transparent 1px),
+    linear-gradient(to bottom, #ffffff 1px, transparent 1px);
+  background-size: clamp(40px, 8vw, 60px) clamp(40px, 8vw, 60px);
+}
+
+/* =========================================
+   DECORACIONES (Esquinas)
+   ========================================= */
+.corner-tl {
+  position: absolute;
+  top: clamp(1rem, 2vw, 2rem);
+  left: clamp(1rem, 2vw, 2rem);
+  display: flex;
+  align-items: center;
+  gap: clamp(0.5rem, 1vw, 0.75rem);
+}
+
+.corner-tr {
+  position: absolute;
+  top: clamp(1rem, 2vw, 2rem);
+  right: clamp(1rem, 2vw, 2rem);
+}
+
+.corner-bl-br {
+  position: absolute;
+  bottom: clamp(1rem, 2vw, 2rem);
+  left: clamp(1rem, 2vw, 2rem);
+  right: clamp(1rem, 2vw, 2rem);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: clamp(0.5rem, 1vw, 1rem);
+}
+
+/* Punto indicador */
+.indicator-dot {
+  height: clamp(0.25rem, 0.5vw, 0.5rem);
+  width: clamp(0.25rem, 0.5vw, 0.5rem);
+  border-radius: 50%;
+  background-color: #ffb347;
+  transition: all 0.5s;
+  opacity: 0;
+  transform: scale(0);
+}
+
+.indicator-dot.is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Textos pequeños de tracking */
+.tracking-text {
+  font-size: clamp(0.625rem, 1.2vw, 0.75rem);
+  color: #a3a3a3;
+  text-transform: uppercase;
+  transition: all 0.5s;
+  opacity: 0;
+}
+
+.tracking-text.spacing-large {
+  letter-spacing: 0.3em;
+}
+
+.tracking-text.spacing-medium {
+  letter-spacing: 0.2em;
+}
+
+.tracking-text.spacing-small {
+  letter-spacing: 0.15em;
+}
+
+/* Animaciones de entrada para las esquinas */
+.corner-tl .tracking-text {
+  transform: translateX(-1rem);
+  transition-delay: 0.2s;
+}
+
+.corner-tl .tracking-text.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.corner-tr .tracking-text {
+  transition-delay: 0.3s;
+}
+
+.corner-tr .tracking-text.is-visible {
+  opacity: 1;
+}
+
+.bottom-loading-block {
+  transition: all 0.5s;
+  transition-delay: 0.4s;
+  transform: translateY(1rem);
+  opacity: 0;
+}
+
+.bottom-loading-block.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.bottom-scroll-block {
+  transition: all 0.5s;
+  transition-delay: 0.5s;
+  transform: translateY(1rem);
+  opacity: 0;
+  text-align: right;
+}
+
+.bottom-scroll-block.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Puntos animados de "Loading..." */
+.pulse-dots-container {
+  display: flex;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.pulse-dot {
+  width: clamp(0.3rem, 0.6vw, 0.375rem);
+  height: clamp(0.3rem, 0.6vw, 0.375rem);
+  border-radius: 50%;
+  background-color: #a3a3a3;
+  animation: pulseAnim 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulseAnim {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* =========================================
+   CONTENIDO PRINCIPAL
+   ========================================= */
+.main-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 clamp(1rem, 3vw, 1.5rem);
+  width: 100%;
+}
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Marca (Gigante) */
+.brand-text {
+  font-size: clamp(3rem, 15vw, 12rem);
+  font-weight: bold;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: #ffffff;
+  margin-bottom: clamp(1rem, 2vw, 2rem);
+  transition: all 0.7s ease-out;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.brand-text.is-revealed {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Línea de Progreso (Barra) */
+.progress-track {
+  position: relative;
+  width: 100%;
+  max-width: 28rem;
+  height: 1px;
+  margin-bottom: clamp(1rem, 2vw, 2rem);
+}
+
+.progress-bg {
+  position: absolute;
+  inset: 0;
+  background-color: #27272a;
+}
+
+.progress-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #ffffff;
+  transition: width 0.1s linear;
+}
+
+/* Nombre, Rol y Tagline */
+.name-role-container {
+  text-align: center;
+  margin-bottom: clamp(1rem, 2vw, 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.25rem, 0.5vw, 0.5rem);
+}
+
+.name-text {
+  font-size: clamp(1.25rem, 2.5vw, 1.875rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  transition: all 0.5s;
+  transition-delay: 0.5s;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.role-text {
+  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+  transition: all 0.5s;
+  transition-delay: 0.7s;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.tagline-text {
+  font-size: clamp(0.7rem, 1.2vw, 0.875rem);
+  color: #a3a3a3;
+  font-style: italic;
+  transition: all 0.5s;
+  transition-delay: 0.9s;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.name-text.is-revealed,
+.role-text.is-revealed,
+.tagline-text.is-revealed {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Porcentaje (El número que sube) */
+.percentage-wrapper {
+  position: absolute;
+  bottom: clamp(-3rem, -5vw, -4rem);
+  left: 50%;
+  transform: translateX(-50%);
+  transition: all 0.5s;
+  transition-delay: 0.2s;
+  opacity: 0;
+}
+
+.percentage-wrapper.is-visible {
+  opacity: 1;
+}
+
+.percentage-text {
+  font-size: clamp(0.65rem, 1.2vw, 0.75rem);
+  letter-spacing: 0.3em;
+  color: #a3a3a3;
+  font-family: monospace;
+}
+
+/* =========================================
+   OVERLAYS DE SALIDA (Las cortinas)
+   ========================================= */
+.reveal-overlay-1,
+.reveal-overlay-2 {
+  position: absolute;
+  inset: 0;
+  transform-origin: bottom;
+  transition: transform 0.7s cubic-bezier(0.76, 0, 0.24, 1);
+  transform: scaleY(0);
+}
+
+.reveal-overlay-1 {
+  background-color: #ffffff;
+}
+
+.reveal-overlay-2 {
+  background-color: #0a0a0a;
+  transition-delay: 0.2s;
+}
+
+.reveal-overlay-1.is-active,
+.reveal-overlay-2.is-active {
+  transform: scaleY(1);
+}
+
+/* =========================================
+   RESPONSIVE BREAKPOINTS
+   ========================================= */
+@media (max-width: 768px) {
+  .preloader-pattern {
+    background-size: clamp(40px, 8vw, 60px) clamp(40px, 8vw, 60px);
+  }
+
+  .pulse-dot {
+    width: clamp(0.3rem, 0.6vw, 0.375rem);
+    height: clamp(0.3rem, 0.6vw, 0.375rem);
+  }
+
+  .progress-fill {
+    transition: width 0.15s linear;
+  }
+
+  .brand-text {
+    font-size: clamp(2.5rem, 12vw, 10rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .corner-tl,
+  .corner-tr,
+  .corner-bl-br {
+    font-size: clamp(0.6rem, 1.2vw, 0.75rem);
+  }
+
+  .tracking-text {
+    letter-spacing: clamp(0.05em, 1vw, 0.3em);
+  }
+
+  .progress-track {
+    max-width: 90%;
+  }
+
+  .indicator-dot {
+    flex-shrink: 0;
+  }
+
+  .brand-text {
+    font-size: clamp(2rem, 10vw, 8rem);
+  }
+
+  .main-content {
+    padding: 0 clamp(0.75rem, 2vw, 1rem);
+  }
+}
