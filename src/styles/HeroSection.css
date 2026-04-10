@@ -289,9 +289,9 @@
 }
 
 @media (max-width: 768px) {
-  /* Hacemos zoom al video en móviles para ocultar los bordes negros incrustados */
+  /* Zoom aumentado para ocultar bordes negros en móviles */
   .hero-background-video {
-    transform: scale(1.2);
+    transform: scale(1.4);
   }
 
   .info-grid {

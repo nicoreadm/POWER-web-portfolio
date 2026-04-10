@@ -8,7 +8,6 @@
   width: 100%;
   z-index: 9999;
   background-color: transparent;
-  /* Reducimos el tiempo de transición para que el cambio de posición sea instantáneo y no haya tirones */
   transition:
     background-color 0.3s ease,
     padding 0.3s ease,
@@ -30,15 +29,13 @@
   align-items: center;
   padding: 0 40px;
 }
+
 /* =========================================
    LOGO Y ANIMACIÓN LETRA POR LETRA
    ========================================= */
-
 .logo-container {
   display: flex;
   pointer-events: auto;
-  /* overflow: hidden; Opcional: Descomenta esto si quieres que las letras "nazcan" de la nada, 
-                       en lugar de verlas caer/subir desde más allá del contenedor */
 }
 
 .logo-container.hide-logo {
@@ -46,7 +43,8 @@
 }
 
 .logo-text {
-  font-size: 50px;
+  /* CAMBIO: Aumentado de 50px a 72px para PC */
+  font-size: 72px;
   font-weight: 900;
   letter-spacing: -2px;
   color: #111;
@@ -79,17 +77,13 @@
 /* --- ESTADO OCULTO DE CADA LETRA --- */
 .logo-container.hide-logo .logo-char {
   opacity: 0;
-  /* Al ocultarse, caen 30px hacia abajo */
   transform: translateY(30px);
-
-  /* Animación para cuando DESAPARECEN (caen) */
-  /* Podemos hacer que caigan un poco más rápido (0.3s) y con un delay menor (0.02s) 
-     para que el ocultamiento sea más ágil que la aparición */
   transition:
     opacity 0.2s ease,
     transform 0.3s cubic-bezier(0.5, 0, 0.2, 1);
   transition-delay: calc(var(--char-index) * 0.02s);
 }
+
 /* =========================================
    CONTROLES Y BOTONES
    ========================================= */
@@ -115,7 +109,8 @@
   }
 
   .logo-text {
-    font-size: clamp(20px, 5vw, 35px);
+    /* CAMBIO: Aumentado para Tablets/Celulares grandes */
+    font-size: clamp(32px, 7vw, 50px);
   }
 }
 
@@ -125,7 +120,8 @@
   }
 
   .logo-text {
-    font-size: clamp(18px, 4.5vw, 28px);
+    /* CAMBIO: Aumentado para Celulares pequeños */
+    font-size: clamp(26px, 8vw, 40px);
   }
 
   .controls-container {
@@ -228,7 +224,6 @@
   border-radius: 24px;
   width: 320px;
   padding: 32px 24px;
-
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
@@ -254,7 +249,6 @@
   gap: 8px;
 }
 
-/* Animación de entrada de los items */
 .dropdown-menu li {
   opacity: 0;
   transform: translateY(15px);
@@ -280,9 +274,8 @@
 }
 
 /* =========================================
-   LINKS Y BOTONES DEL MENÚ (HIGHLIGHT + FLECHA)
+   LINKS Y BOTONES DEL MENÚ
    ========================================= */
-/* Agrupamos los <a> y los <button> para que se vean idénticos (letras gigantes) */
 .dropdown-menu li a,
 .dropdown-menu li .theme-select-btn {
   display: flex;
@@ -304,7 +297,6 @@
   font-family: inherit;
 }
 
-/* Contenedor de la flecha */
 .link-arrow {
   display: inline-flex;
   align-items: center;
@@ -323,23 +315,20 @@
   transform: translateX(-8px);
 }
 
-/* EFECTO HOVER (Fondo gris clarito) */
 .dropdown-menu li a:hover,
 .dropdown-menu li .theme-select-btn:hover {
   background-color: #f3f5f8;
   color: #0f1115;
 }
 
-/* Expansión de la flecha al hacer hover O cuando el tema está activo */
 .dropdown-menu li a:hover .link-arrow,
 .dropdown-menu li .theme-select-btn:hover .link-arrow,
 .dropdown-menu li .theme-select-btn.active-section .link-arrow {
-  width: 44px; /* Abre espacio para la flecha */
+  width: 44px;
   opacity: 1;
   transform: translateX(0);
 }
 
-/* Animación de la flecha rebotando */
 .dropdown-menu li a:hover .link-arrow svg,
 .dropdown-menu li .theme-select-btn:hover .link-arrow svg,
 .dropdown-menu li .theme-select-btn.active-section .link-arrow svg {
@@ -347,7 +336,6 @@
   animation: arrowPulse 0.6s cubic-bezier(0.16, 1, 0.3, 1) infinite;
 }
 
-/* Color gris cuando la sección/tema está activo */
 .dropdown-menu li a.active-section,
 .dropdown-menu li .theme-select-btn.active-section {
   color: #a0a4ab;
@@ -358,9 +346,6 @@
   color: #0f1115;
 }
 
-/* =========================================
-   ANIMACIÓN DE LA FLECHA (Keyframes)
-   ========================================= */
 @keyframes arrowPulse {
   0% {
     transform: translateX(0);
@@ -437,44 +422,17 @@
 }
 
 .power-gif-circle {
-  width: 50px;
-  height: 50px;
+  /* CAMBIO: Usamos 1em para que siempre sea del mismo tamaño exacto que la letra, sin importar la pantalla */
+  width: 1em;
+  height: 1em;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   object-fit: cover;
   border: 2px solid #111;
   display: block;
 }
-/* =========================================
-   LOGO Y ANIMACIÓN LETRA POR LETRA
-   ========================================= */
 
-/* ... (Tus estilos existentes para .logo-container, .logo-text, .logo-char, etc.) ... */
-
-/* --- NUEVO: ESTILOS PARA EL GIF DE POWER --- */
-
-/* Contenedor del GIF (span .logo-char) */
-.power-gif-container {
-  display: inline-flex; /* Para alinear verticalmente */
-  align-items: center;
-  justify-content: center;
-  margin-right: 12px; /* Espacio entre el GIF y la 'P' */
-  vertical-align: middle; /* Alineación mágica con el texto */
-  transform: translateY(-4px); /* Ajuste fino si queda muy arriba/abajo */
-}
-
-/* El GIF circular en sí */
-.power-gif-circle {
-  width: 50px; /* Tamaño del círculo (ajusta según tu fuente) */
-  height: 50px; /* Debe ser igual al width */
-  aspect-ratio: 1 / 1; /* Garantiza proporciones cuadradas */
-  border-radius: 50%; /* Lo hace redondo */
-  object-fit: cover; /* Centra y recorta el GIF dentro del círculo */
-  border: 2px solid #111; /* Un borde negro fino para que destaque sobre el amarillo */
-  display: block;
-}
-
-/* Limpia los estilos por defecto del botón para que parezca un Link del menú */
+/* Limpia los estilos por defecto del botón */
 .theme-select-btn {
   background: transparent;
   border: none;
@@ -488,12 +446,10 @@
   align-items: center;
 }
 
-/* Aprovechamos el hover que ya tenías para los enlaces a (Link) */
 .theme-select-btn:hover {
   opacity: 0.7;
 }
 
-/* Activa la flecha cuando el tema está seleccionado (mismo comportamiento que tu active-section) */
 .theme-select-btn.active-section .link-arrow {
   opacity: 1;
   transform: translateX(0);
@@ -502,8 +458,6 @@
 /* =========================================
    ESTILOS PARA EL MENÚ DE TEMAS
    ========================================= */
-
-/* Reseteamos el botón para que parezca texto normal del menú */
 .dropdown-menu ul li .theme-select-btn {
   display: flex;
   align-items: center;
@@ -512,7 +466,7 @@
   border: none;
   color: inherit;
   font-family: inherit;
-  font-size: inherit; /* Hereda el tamaño gigante/estilo de tus links */
+  font-size: inherit;
   text-transform: uppercase;
   cursor: pointer;
   padding: 0;
@@ -520,11 +474,10 @@
   transition: opacity 0.3s ease;
 }
 
-/* Estado inicial de la flecha: oculta y desplazada a la izquierda */
 .dropdown-menu ul li .theme-select-btn .link-arrow {
   display: inline-flex;
   align-items: center;
-  margin-right: 15px; /* Espacio entre la flecha y el nombre del tema */
+  margin-right: 15px;
   opacity: 0;
   transform: translateX(-15px);
   transition:
@@ -532,17 +485,12 @@
     transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* ANIMACIÓN DE LA FLECHA: 
-  Aparece y se desliza a su lugar original cuando pasas el mouse (hover) 
-  o cuando ese tema está seleccionado (.active-section) 
-*/
 .dropdown-menu ul li .theme-select-btn:hover .link-arrow,
 .dropdown-menu ul li .theme-select-btn.active-section .link-arrow {
   opacity: 1;
   transform: translateX(0);
 }
 
-/* Efecto hover general opcional (si tus links se aclaran al pasar el mouse) */
 .dropdown-menu ul li .theme-select-btn:hover {
   opacity: 0.7;
 }
@@ -550,13 +498,10 @@
 /* =========================================
    HEADER & NAVIGATION
    ========================================= */
-
-/* Hover para los links de Desktop */
 .hover-theme-text:hover {
   color: var(--theme-accent) !important;
 }
 
-/* Efecto para los links del menú móvil gigante */
 .mobile-nav-link {
   position: relative;
   transition:
@@ -567,12 +512,9 @@
 
 .mobile-nav-link:hover {
   color: var(--theme-accent);
-  transform: translateX(
-    15px
-  ); /* Pequeño desplazamiento hacia la derecha al hacer hover */
+  transform: translateX(15px);
 }
 
-/* Opcional: Un stroke (borde) al texto si quieres que se vea más brutalista */
 .mobile-nav-link:active {
   color: transparent;
   -webkit-text-stroke: 2px var(--theme-accent);
