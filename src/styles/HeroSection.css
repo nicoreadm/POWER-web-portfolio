@@ -138,7 +138,7 @@
   padding-right: 4vw;
   letter-spacing: -0.5vw;
   line-height: 0.85;
-  word-wrap: break-word; /* Responsive fix added */
+  word-wrap: break-word;
 }
 
 .massive-text.outline {
@@ -241,7 +241,7 @@
 }
 
 .tech-item {
-  font-size: clamp(16px, 2vw, 26px); /* Responsive fix added */
+  font-size: clamp(16px, 2vw, 26px);
   font-weight: 800;
   letter-spacing: -1px;
   color: #0f1115;
@@ -289,6 +289,11 @@
 }
 
 @media (max-width: 768px) {
+  /* Hacemos zoom al video en móviles para ocultar los bordes negros incrustados */
+  .hero-background-video {
+    transform: scale(1.2);
+  }
+
   .info-grid {
     grid-template-columns: 1fr;
     gap: 40px;

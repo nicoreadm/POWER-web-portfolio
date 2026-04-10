@@ -225,11 +225,14 @@ const Header = () => {
 
   return (
     <>
-      <header className={`header z-[100] ${isScrolled ? "scrolled" : ""}`}>
-        <div className="header-container flex justify-between items-center w-full">
-          {/* LOGO */}
+      <header
+        className={`header z-[100] w-full ${isScrolled ? "scrolled" : ""}`}
+      >
+        {/* 1. CONTENEDOR PRINCIPAL: Forzamos la fila (!flex-row) y separamos a los extremos (justify-between) */}
+        <div className="header-container w-full flex !flex-row justify-between items-center px-4 md:px-0">
+          {/* 2. LOGO: Evitamos que ocupe el 100% del ancho (!w-auto) y lo alineamos a la izquierda (!justify-start) */}
           <div
-            className={`logo-container relative z-[101] ${isLogoHidden ? "hide-logo" : ""}`}
+            className={`logo-container relative z-[101] !w-auto !flex !justify-start ${isLogoHidden ? "hide-logo" : ""}`}
           >
             <h1
               className={`logo-text ${
@@ -265,9 +268,9 @@ const Header = () => {
             </h1>
           </div>
 
-          {/* ICONO HAMBURGUESA (MÓVIL) CON ESTILO DE BOTÓN OSCURO */}
+          {/* 3. ICONO HAMBURGUESA: Le agregamos 'shrink-0' para que no se aplaste si el logo es muy largo */}
           <button
-            className="md:hidden relative z-[101] w-12 h-12 flex flex-col justify-center items-center gap-[5px] focus:outline-none bg-[#0f1115] rounded-full border border-[rgba(255,255,255,0.1)] transition-transform duration-300 hover:scale-105"
+            className="md:hidden shrink-0 relative z-[101] w-12 h-12 flex flex-col justify-center items-center gap-[5px] focus:outline-none bg-[#0f1115] rounded-full border border-[rgba(255,255,255,0.1)] transition-transform duration-300 hover:scale-105"
             onClick={toggleMobileMenu}
             aria-label="Toggle Menu"
           >
@@ -290,7 +293,7 @@ const Header = () => {
             />
           </button>
 
-          {/* CONTROLES (ESCRITORIO) - !hidden fuerza a que no se vean en móvil */}
+          {/* 4. CONTROLES (ESCRITORIO) */}
           <div className="controls-container !hidden md:!flex">
             {/* 1. BOTÓN DINÁMICO */}
             <button
