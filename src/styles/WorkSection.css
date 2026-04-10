@@ -1,18 +1,21 @@
 /* =========================================
    0. VARIABLES DE TEMA (ACENTOS)
    ========================================= */
+/* Heart: Blanco crema */
 :root[data-theme="heart"] {
   --theme-accent: #f5f4ef;
   --theme-accent-rgb: 245, 244, 239;
-  --theme-text-hover: #111111;
+  --theme-text-hover: #111111; /* Texto oscuro al hacer hover sobre el fondo crema */
 }
 
+/* Power: Amarillo vibrante original */
 :root[data-theme="power"] {
   --theme-accent: #ffde00;
   --theme-accent-rgb: 255, 222, 0;
-  --theme-text-hover: #0f1115;
+  --theme-text-hover: #0f1115; /* Texto oscuro al hacer hover */
 }
 
+/* Gyro: Verde acero/menta vibrante */
 :root[data-theme="gyro"] {
   --theme-accent: #00e676;
   --theme-accent-rgb: 0, 230, 118;
@@ -34,13 +37,13 @@
 :root[data-theme="kantan"] {
   --theme-accent: #1b7161;
   --theme-accent-rgb: 27, 113, 97;
-  --theme-text-hover: #f2f2f2;
+  --theme-text-hover: #f2f2f2; /* Texto claro para el fondo oscuro */
 }
 
 :root[data-theme="eve"] {
   --theme-accent: #ffb347;
   --theme-accent-rgb: 39, 36, 40;
-  --theme-text-hover: #f2f2f2;
+  --theme-text-hover: #f2f2f2; /* Texto claro para el fondo oscuro */
 }
 
 /* =========================================
@@ -109,6 +112,7 @@
 .work-row.expanded {
   background-color: #1a1c20;
   padding: 0 30px;
+  /* CAMBIO: Usamos la variable de acento en lugar del amarillo fijo */
   border-bottom: 1px solid var(--theme-accent);
 }
 
@@ -161,6 +165,7 @@
   transform: translateY(-10px);
 }
 
+/* CAMBIO: Al hacer hover, el título toma el color del tema actual */
 .work-row:hover .work-name {
   color: var(--theme-accent);
 }
@@ -206,6 +211,7 @@
   padding-top: 20px;
 }
 
+/* CAMBIO: Los mini-títulos toman el color del tema actual */
 .detail-section-title {
   font-size: 14px;
   font-weight: 700;
@@ -254,6 +260,7 @@
   align-items: center;
   gap: 15px;
   background-color: transparent;
+  /* CAMBIO: Color de texto del botón = color del tema */
   color: var(--theme-accent);
   padding: 0 12px 0 28px;
   border-radius: 40px;
@@ -263,17 +270,23 @@
   text-transform: uppercase;
   text-decoration: none;
   cursor: pointer;
+
+  /* CAMBIO: Inyectamos el color sólido y el RGB para el resplandor */
   box-shadow:
     0 0 0 3px var(--theme-accent),
     inset 0 0 10px rgba(0, 0, 0, 0.2),
     0 0 15px rgba(var(--theme-accent-rgb), 0.3);
+
   transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-live-site:hover {
+  /* CAMBIO: Fondo del botón y texto al hacer hover se adaptan al tema */
   background-color: var(--theme-accent);
   color: var(--theme-text-hover);
   transform: scale(1.03) rotate(-1deg);
+
+  /* Intensificamos el resplandor usando nuestra variable RGB */
   box-shadow:
     0 0 0 3px var(--theme-accent),
     inset 0 0 15px rgba(var(--theme-accent-rgb), 0.4),
