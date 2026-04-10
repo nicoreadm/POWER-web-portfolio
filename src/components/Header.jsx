@@ -232,7 +232,7 @@ const Header = () => {
         <div className="header-container w-full flex !flex-row justify-between items-center px-4 md:px-0">
           {/* 2. LOGO: Evitamos que ocupe el 100% del ancho (!w-auto) y lo alineamos a la izquierda (!justify-start) */}
           <div
-            className={`logo-container relative z-[101] !w-auto !flex !justify-start ${isLogoHidden ? "hide-logo" : ""}`}
+            className={`logo-container relative z-[101] !w-auto !flex !justify-start -ml-5 mt-3 sm:m-0 ${isLogoHidden ? "hide-logo" : ""}`}
           >
             <h1
               className={`logo-text ${

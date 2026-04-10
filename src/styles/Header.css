@@ -119,10 +119,6 @@
     padding: clamp(12px, 3vw, 16px) 0;
   }
 
-  .logo-container {
-    transform: translate(-10px, 8px);
-  }
-
   .logo-text {
     font-size: clamp(40px, 11vw, 55px);
     letter-spacing: -1.5px;
