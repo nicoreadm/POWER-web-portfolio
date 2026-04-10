@@ -404,6 +404,8 @@ const Header = () => {
                         </svg>
                       </span>
                       {t.id.toUpperCase()}
+                      {t.id === "heart" && " -- (claro)"}
+                      {t.id === "eve" && " -- (oscuro)"}
                     </button>
                   </li>
                 ))}
