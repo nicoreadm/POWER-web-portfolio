@@ -421,8 +421,8 @@
 
 .power-gif-circle {
   /* CAMBIO: Usamos 1em para que siempre sea del mismo tamaño exacto que la letra, sin importar la pantalla */
-  width: 1em;
-  height: 1em;
+  width: 0.85em;
+  height: 0.85em;
   aspect-ratio: 1 / 1;
   border-radius: 50%;
   object-fit: cover;
