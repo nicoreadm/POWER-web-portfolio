@@ -57,7 +57,7 @@ const WorkSection = () => {
       ],
       details:
         "Desarrollo de un sistema de reservas para una casa de alquiler vacacional. Incluye gestión de disponibilidad y panel de administración para el propietario.",
-      liveUrl: "https://casa-hanami.vercel.app",
+      liveUrl: "https://casahanami.vercel.app",
       typeUrl: "IR AL SITIO REAL",
     },
   ];
