@@ -43,14 +43,22 @@ const WorkSection = () => {
     },
     {
       id: "03",
-      name: "EMPRETIENDA DARK",
-      role: "Open Source CSS Theme",
-      image: "/empretienda-preview.jpg",
-      technologies: ["JavaScript", "CSS3 (SCSS)", "Themes", "UX/UI"],
+      name: "CASA HANAMI",
+      role: "Sistema de Reservas",
+      image: "/hanami-preview.jpg",
+      technologies: [
+        "Next.js",
+        "React",
+        "JavaScript",
+        "API",
+        "MYSql",
+        "CSS",
+        "UX/UI",
+      ],
       details:
-        "Primer y único tema oscuro para Empretienda. Desarrollado con enfoque en el usuario y la legibilidad en pantallas AMOLED. Código libre para la comunidad.",
-      liveUrl: "https://github.com/nicoreadm/Empretienda-Dark-Mode-CSS",
-      typeUrl: "IR A GITHUB",
+        "Desarrollo de un sistema de reservas para una casa de alquiler vacacional. Incluye gestión de disponibilidad y panel de administración para el propietario.",
+      liveUrl: "https://casa-hanami.vercel.app",
+      typeUrl: "IR AL SITIO REAL",
     },
   ];
 
